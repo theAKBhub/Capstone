@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.DashboardActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        style="@style/AppbarLayout"
+        android:elevation="@dimen/dimen_4dp"
+        tools:ignore="UnusedAttribute">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/ToolbarLayout"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dimen_16dp"
+        android:background="@color/colorGrayLight"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <GridView
+            android:id="@+id/gridview_task_counts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="@dimen/dimen_16dp"
+            android:numColumns="@integer/grid_cols"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="@dimen/dimen_16dp"/>
+
+        <!-- Loading indicator shown before first load -->
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"/>
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>

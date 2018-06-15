@@ -1,0 +1,39 @@
+package com.example.android.capstone.helper;
+
+/**
+ * This class declares all constant variables used across the application
+ */
+
+public class Constants {
+
+    /** Constants for Task Categories */
+    public static final String TASK_CATEGORY_BUSINESS = "Business";
+    public static final String TASK_CATEGORY_PERSONAL = "Personal";
+    public static final String TASK_CATEGORY_HEALTH = "Health";
+    public static final String TASK_CATEGORY_TRAVEL = "Travel";
+    public static final String TASK_CATEGORY_LEISURE = "Leisure";
+    public static final String TASK_CATEGORY_OCCASION = "Occasion";
+    public static final String TASK_CATEGORY_EVENT = "Event";
+
+    /** Constants for Task Priority */
+    public static final String TASK_PRIORITY_HIGH = "High";
+    public static final String TASK_PRIORITY_MEDIUM = "Medium";
+    public static final String TASK_PRIORITY_LOW = "Low";
+
+    /** Constants for Task Repeat Frequency */
+    public static final String TASK_REPEAT_DAILY = "Daily";
+    public static final String TASK_REPEAT_WEEKLY = "Weekly";
+    public static final String TASK_REPEAT_MONTHLY = "Monthly";
+
+    /** Constants for Task Heading */
+    public static final String HDG_TASKS = "Tasks";
+    public static final String HDG_TASKS_ALL = "All";
+    public static final String HDG_TASKS_PAST = "Past Due Date";
+    public static final String HDG_TASKS_TODAY = "Today";
+    public static final String HDG_TASKS_TOMORROW = "Tomorrow";
+    public static final String HDG_TASKS_WEEK = "Next 7 Days";
+    public static final String HDG_TASKS_NODATE = "Not Dated";
+
+    /** Other Constants */
+    public static final String INTENT_KEY_TASK_FILTER = "key_task_filter";
+}

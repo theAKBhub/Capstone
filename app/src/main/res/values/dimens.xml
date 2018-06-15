@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Common Dimensions -->
+    <dimen name="dimen_1dp">1dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
+    <dimen name="dimen_32dp">32dp</dimen>
+    <dimen name="dimen_48dp">48dp</dimen>
+    <dimen name="dimen_60dp">60dp</dimen>
+    <dimen name="dimen_70dp">70dp</dimen>
+    <dimen name="dimen_80dp">80dp</dimen>
+    <dimen name="dimen_96dp">96dp</dimen>
+    <dimen name="dimen_128dp">128dp</dimen>
+    <dimen name="dimen_144dp">144dp</dimen>
+    <dimen name="dimen_192dp">192dp</dimen>
+
+    <!-- Specific Dimensions -->
+    <dimen name="fab_elevation">@dimen/dimen_6dp</dimen>
+    <dimen name="fab_press_translation_z">12dp</dimen>
+    <dimen name="fab_margin">@dimen/dimen_24dp</dimen>
+    <dimen name="appbar_expanded">280dp</dimen>
+
+    <!-- Font Sizes -->
+    <dimen name="textsize_xsmall">12sp</dimen>
+    <dimen name="textsize_small">14sp</dimen>
+    <dimen name="textsize_medium">16sp</dimen>
+    <dimen name="textsize_big">18sp</dimen>
+    <dimen name="textsize_large">24sp</dimen>
+    <dimen name="textsize_xlarge">34sp</dimen>
+
+    <item format="integer" name="grid_cols" type="integer">2</item>
+
+    <!-- Widget Dimensions -->
+    <dimen name="widget_margin">8dp</dimen>
+    <dimen name="widget_height">180dp</dimen>
+    <dimen name="widget_width">250dp</dimen>
+</resources>

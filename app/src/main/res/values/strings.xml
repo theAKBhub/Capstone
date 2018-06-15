@@ -1,0 +1,32 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Capstone</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_tasklist">Tasks</string>
+
+    <string name="label_display_list">Show List</string>
+
+    <string name="default_panel_heading">Tasks Today</string>
+    <string name="default_panel_count">10</string>
+    <string name="default_task_title">Task Title</string>
+    <string name="default_task_category">Task Category</string>
+    <string name="default_due_date">07-Aug</string>
+    <string name="default_due_time">10:00 AM</string>
+
+    <string name="info_db_upgrade">Upgrading database from Version %d to Version %d</string>
+    <string name="info_no_tasks">No active tasks found.\n\nGet started by adding a new task and \nalso check if all task filters are cleared.</string>
+
+    <string name="error_missing_title">Missing Task Title. DB operation could not be completed.</string>
+    <string name="error_missing_extra_info">Missing extra information details. DB operation could not be completed.</string>
+    <string name="error_missing_frequency">Missing repeat frequency for a repeating task. DB operation could not be completed.</string>
+    <string name="error_missing_date_completed">Missing completion date for a completed task. DB operation could not be completed.</string>
+    <string name="error_date_added">Missing Task date added. DB operation could not be completed.</string>
+    <string name="error_db_insert">Failed to insert the record => %s</string>
+    <string name="error_unknown_uri">URI provided is unknown, and cannot be queried => %s></string>
+    <string name="error_fetch_data">Failed to load database records => %s</string>
+    <string name="title_pending_tasks">Pending Tasks</string>
+    <string name="info_empty_widget">No tasks to display in the widget. Get started by adding a new task.</string>
+
+
+    <!--<string name="hello">Hello, <xliff:g id="name" example="Dan Lew">%s</xliff:g>!</string>-->
+
+</resources>

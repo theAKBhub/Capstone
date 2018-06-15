@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    android:configure => Activity to be launched,when widget is first installed
+    android:initialLayout => XML layout associated with the widget
+    android:previewImage => Image to be seen when selecting a widget
+    android:updatePeriodMillis => Default is 30min (30x60x1000)
+-->
+
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_layout"
+    android:minHeight="@dimen/widget_height"
+    android:minWidth="@dimen/widget_width"
+    android:previewImage="@drawable/ic_list_magenta"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="180000"
+    android:widgetCategory="home_screen">
+</appwidget-provider>
+
+<!-- android:configure="com.acubed.android.taskmate.ui.DashboardActivity"-->
+

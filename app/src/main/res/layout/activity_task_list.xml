@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.TaskListActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_tasklist"
+        style="@style/AppbarLayout"
+        android:elevation="@dimen/dimen_4dp"
+        tools:ignore="UnusedAttribute">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_tasklist"
+            style="@style/ToolbarLayout"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <Spinner
+                android:id="@+id/spinner_toolbar_tasklist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:overlapAnchor="false"/>
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- RecyclerView to display a list of tasks -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewTasks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/dimen_8dp"/>
+
+        <TextView
+            android:id="@+id/textview_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="@dimen/dimen_16dp"
+            android:drawableTop="@drawable/ic_deck_chair"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/info_no_tasks"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/textsize_medium"/>
+
+    </FrameLayout>
+
+    <!-- Floating action button that launches screen to add task -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:elevation="@dimen/fab_elevation"
+        app:fabSize="normal"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_anchor="@id/recyclerViewTasks"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_edit"/>
+</android.support.design.widget.CoordinatorLayout>

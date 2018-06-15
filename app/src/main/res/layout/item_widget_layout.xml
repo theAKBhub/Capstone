@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_60dp">
+
+    <TextView
+        android:id="@+id/textview_widget_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_8dp"
+        android:paddingRight="@dimen/dimen_8dp"
+        android:paddingTop="@dimen/dimen_8dp"
+        android:paddingBottom="@dimen/dimen_2dp"
+        tools:text="@string/default_task_title"
+        android:textColor="@color/colorPrimary"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/textsize_small"/>
+
+    <TextView
+        android:id="@+id/textview_widget_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_8dp"
+        android:paddingRight="@dimen/dimen_8dp"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/textsize_xsmall"
+        android:text="Date"/>
+
+
+    <!--android:paddingLeft="@dimen/dimen_8dp"-->
+    <!--android:paddingRight="@dimen/dimen_8dp"-->
+    <!--android:textColor="@color/colorText"-->
+    <!--android:textSize="@dimen/textsize_xsmall"-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textview_widget_date"-->
+        <!--tools:text="@string/default_due_date"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingLeft="@dimen/dimen_8dp"-->
+        <!--android:paddingRight="@dimen/dimen_8dp"-->
+        <!--android:paddingBottom="@dimen/dimen_8dp"-->
+        <!--android:textColor="@color/colorText"-->
+        <!--android:textSize="@dimen/textsize_xsmall"/>-->
+
+    <!--<View-->
+        <!--android:layout_height="@dimen/dimen_1dp"-->
+        <!--android:layout_width="match_parent"/>-->
+
+</LinearLayout>
