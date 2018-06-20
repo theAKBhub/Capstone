@@ -3,7 +3,6 @@ package com.example.android.capstone.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,9 +25,7 @@ import butterknife.ButterKnife;
 import com.example.android.capstone.R;
 import com.example.android.capstone.adapter.DashboardGridAdapter;
 import com.example.android.capstone.data.TaskContract.TaskEntry;
-import com.example.android.capstone.data.TaskDbHelper;
 import com.example.android.capstone.helper.Constants;
-import com.example.android.capstone.helper.Utils;
 import timber.log.Timber;
 
 public class DashboardActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -72,7 +69,40 @@ public class DashboardActivity extends AppCompatActivity implements LoaderManage
                 openTasksList(position);
             }
         });
+
+
+
+
+
+        //////////////////////////
+     /*  TaskDbHelper dbHelper = new TaskDbHelper(this);
+        SQLiteDatabase sqLiteDBReadable = dbHelper.getReadableDatabase();
+        String rdate = "2018-06-19";
+        String tdate = "2018-06-15";
+
+        String query = "select task_title, (julianday('" + Utils.getDateToday() + "') - julianday(date_added)) as diff "
+                + "FROM tasks "
+                + "WHERE extra_info_type LIKE '%" + Constants.EXTRA_INFO_LOCATION + "%'";
+
+        Cursor cursor =
+                //sqLiteDBReadable.rawQuery("SELECT * FROM " + TaskEntry.TABLE_NAME + " WHERE tag_completed = 1", null);
+                //sqLiteDBReadable.rawQuery("SELECT * FROM tasks WHERE (julianday('" + rdate + "')-julianday(date_added)) < 1  ;" , null);
+                sqLiteDBReadable.rawQuery(query, null);
+        DatabaseUtils.dumpCursor(cursor); */
+
+
+//        findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+//                startActivityForResult(intent, 1);
+//            }
+//        });
+        //////////////////////////
+
     }
+
+    ////////////////////////////////////////
 
     /**
      * Method invoked after this activity has been paused or restarted
@@ -140,23 +170,6 @@ public class DashboardActivity extends AppCompatActivity implements LoaderManage
         mGridViewCounts.setAdapter(new DashboardGridAdapter(mContext, counts, headings, gridHeight));
     }
 
-    private String getDashboardRawQuery() {
-        return "SELECT"
-                + " COUNT(*) AS " + TaskEntry.RES_COLUMN_COUNT_TASKS_ALL + ","
-                + " SUM(CASE WHEN " + TaskEntry.COLUMN_DUE_DATE + " < '" + Utils.getDateToday() + "' THEN 1 ELSE 0 END) "
-                        + "AS " + TaskEntry.RES_COLUMN_COUNT_TASKS_PAST + ","
-                + " SUM(CASE WHEN " + TaskEntry.COLUMN_DUE_DATE + " = '" + Utils.getDateToday() + "' THEN 1 ELSE 0 END) "
-                        + "AS " + TaskEntry.RES_COLUMN_COUNT_TASKS_TODAY + ","
-                + " SUM(CASE WHEN " + TaskEntry.COLUMN_DUE_DATE + " = '" + Utils.getDateTomorrow() + "' THEN 1 ELSE 0 END) "
-                        + "AS " + TaskEntry.RES_COLUMN_COUNT_TASKS_TOMORROW + ","
-                + " SUM(CASE WHEN (" + TaskEntry.COLUMN_DUE_DATE + " > '" + Utils.getDateToday() + "' AND "
-                        + TaskEntry.COLUMN_DUE_DATE + " <= '" + Utils.getDateWeek() + "') THEN 1 ELSE 0 END) "
-                        + "AS " + TaskEntry.RES_COLUMN_COUNT_TASKS_WEEK + ","
-                + " SUM(CASE WHEN " + TaskEntry.COLUMN_DUE_DATE + " = '' THEN 1 ELSE 0 END) "
-                        + "AS " + TaskEntry.RES_COLUMN_COUNT_TASKS_NODATE
-                        + " FROM " + TaskEntry.TABLE_NAME;
-    }
-
     /**
      * Method to instantiate and return a new AsyncTaskLoader with the given ID.
      * This loader will return query result data as a Cursor if the query is successful and null otherwise.
@@ -185,11 +198,12 @@ public class DashboardActivity extends AppCompatActivity implements LoaderManage
             public Cursor loadInBackground() {
 
                 try {
-                    TaskDbHelper dbHelper = new TaskDbHelper(getContext());
-                    SQLiteDatabase sqLiteDBReadable = dbHelper.getReadableDatabase();
-                    Cursor cursor = sqLiteDBReadable.rawQuery(getDashboardRawQuery(), null);
-
-                    return cursor;
+                    return getContentResolver().query(TaskEntry.CONTENT_URI,
+                            new String[]{TaskEntry.PROJECTION_COUNTS},
+                            "((" + TaskEntry.COLUMN_TAG_COMPLETED + " = 0))",
+                            null,
+                            null
+                    );
 
                 } catch (Exception e) {
                     Timber.e(getString(R.string.error_fetch_data, e.getMessage()));
@@ -244,6 +258,12 @@ public class DashboardActivity extends AppCompatActivity implements LoaderManage
     public void openTasksList(int taskFilterIndex) {
         Intent intent = new Intent(this, TaskListActivity.class);
         intent.putExtra(Constants.INTENT_KEY_TASK_FILTER, taskFilterIndex);
-        startActivity(intent);
+
+//        if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
+//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
+//            startActivity(intent, options.toBundle());
+//        } else {
+            startActivity(intent);
+        //}
     }
 }

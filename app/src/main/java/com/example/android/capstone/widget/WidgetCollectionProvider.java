@@ -1,11 +1,16 @@
 package com.example.android.capstone.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.TaskStackBuilder;
 import android.widget.RemoteViews;
 import com.example.android.capstone.R;
+import com.example.android.capstone.helper.Constants;
+import com.example.android.capstone.ui.TaskDetailActivity;
+import com.example.android.capstone.ui.TaskListActivity;
 
 /**
  * This class controls the functionality of the widget
@@ -29,8 +34,30 @@ public class WidgetCollectionProvider extends AppWidgetProvider {
         // Set an empty view in case of no data
         remoteViews.setEmptyView(R.id.listview_widget, R.id.textview_empty_widget);
 
-        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.listview_widget);
+
+
+
+        // click event handler for the title, launches Tasks List when the user clicks on title
+        Intent titleIntent = new Intent(context, TaskListActivity.class);
+        titleIntent.putExtra(Constants.INTENT_KEY_TASK_FILTER, 0);
+        PendingIntent titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0);
+        remoteViews.setOnClickPendingIntent(R.id.textview_widget_header, titlePendingIntent);
+
+
+
+        //Intent intent = new Intent(context, WidgetRemoteService.class);
+        //remoteViews.setRemoteAdapter(R.id.listview_widget, intent);
+
+
+        // click event handler for each list item on widget, launches Detail Activity with that Task
+        Intent clickIntentTemplate = new Intent(context, TaskDetailActivity.class);
+        PendingIntent clickPendingIntentTemplate = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(clickIntentTemplate)
+                .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setPendingIntentTemplate(R.id.listview_widget, clickPendingIntentTemplate);
+
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.listview_widget);
 
     }
 

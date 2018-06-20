@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Binder;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import com.example.android.capstone.R;
 import com.example.android.capstone.data.TaskContract.TaskEntry;
+import com.example.android.capstone.helper.Constants;
 import java.util.ArrayList;
 import java.util.List;
-import timber.log.Timber;
 
 /**
  * WidgetDataProvider class acts as the adapter for the collection view widget, and provides
@@ -38,7 +39,6 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     // Called on start and when notifyAppWidgetViewDataChanged is called
     @Override
     public void onDataSetChanged() {
-        Timber.d("onDataSetChanged");
         final long identityToken = Binder.clearCallingIdentity();
 
         if (mCursor != null) mCursor.close();
@@ -78,14 +78,21 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         int idIndex = mCursor.getColumnIndex(TaskEntry._ID);
         int titleIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_TASK_TITLE);
         int dateIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_DATE);
-        int timeIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_TIME);
 
         long taskId = mCursor.getLong(idIndex);
         String taskTitle = mCursor.getString(titleIndex);
 
+        // update widget
         RemoteViews view = new RemoteViews(mContext.getPackageName(), R.layout.item_widget_layout);
         view.setTextViewText(R.id.textview_widget_task, taskTitle);
         view.setTextViewText(R.id.textview_widget_date, mCursor.getString(dateIndex));
+
+        // onClick PendingIntent Template using the specific task Id for each item individually
+        Bundle extras = new Bundle();
+        extras.putLong(Constants.INTENT_KEY_TASK_ID, taskId);
+        Intent fillInIntent = new Intent();
+        fillInIntent.putExtras(extras);
+        view.setOnClickFillInIntent(R.id.llayout_widget_task, fillInIntent);
 
         return view;
     }

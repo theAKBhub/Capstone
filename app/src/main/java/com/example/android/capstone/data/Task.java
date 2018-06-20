@@ -1,7 +1,9 @@
-package com.acubed.android.taskmate.data;
+package com.example.android.capstone.data;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+import com.example.android.capstone.data.TaskContract.TaskEntry;
 
 /**
  * A {@link Task} object that contains details related to a single Task item
@@ -9,7 +11,7 @@ import android.os.Parcelable;
 
 public class Task implements Parcelable {
 
-    private int mTaskId;                        // ID of task item
+    private long mTaskId;                        // ID of task item
     private String mTaskTitle;                  // e.g. Participate in marathon
     private String mCategory;                   // e.g. Health, Business, Personal, etc.
     private int mPriority;                      // 1 (high), 2 (Medium), 3 (Low), 0 (No priority)
@@ -35,7 +37,7 @@ public class Task implements Parcelable {
      * @param parcel - Parcel object
      */
     private Task(Parcel parcel) {
-        mTaskId = parcel.readInt();
+        mTaskId = parcel.readLong();
         mTaskTitle = parcel.readString();
         mCategory = parcel.readString();
         mPriority = parcel.readInt();
@@ -44,6 +46,7 @@ public class Task implements Parcelable {
         mDueDate = parcel.readString();
         mDueTime = parcel.readString();
         mTagRepeat = parcel.readInt();
+        mRepeatFrequency = parcel.readString();
         mTagCompleted = parcel.readInt();
         mDateAdded = parcel.readString();
         mDateCompleted = parcel.readString();
@@ -68,7 +71,7 @@ public class Task implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mTaskId);
+        dest.writeLong(mTaskId);
         dest.writeString(mTaskTitle);
         dest.writeString(mCategory);
         dest.writeInt(mPriority);
@@ -77,6 +80,7 @@ public class Task implements Parcelable {
         dest.writeString(mDueDate);
         dest.writeString(mDueTime);
         dest.writeInt(mTagRepeat);
+        dest.writeString(mRepeatFrequency);
         dest.writeInt(mTagCompleted);
         dest.writeString(mDateAdded);
         dest.writeString(mDateCompleted);
@@ -85,11 +89,11 @@ public class Task implements Parcelable {
     /**
      * Getter and Setter methods for class Recipe
      */
-    public int getTaskId() {
+    public long getTaskId() {
         return mTaskId;
     }
 
-    public void setTaskId(int taskId) {
+    public void setTaskId(long taskId) {
         mTaskId = taskId;
     }
 
@@ -187,5 +191,31 @@ public class Task implements Parcelable {
 
     public void setDateCompleted(String dateCompleted) {
         mDateCompleted = dateCompleted;
+    }
+
+    /**
+     * Method to create and populate a Task object from the cursor data
+     * This task parcelable object will be used to pass between activities
+     * @param cursor
+     * @return {@link Task} object
+     */
+    public Task getTaskObject(Cursor cursor) {
+        Task task = new Task();
+
+        task.setTaskId(cursor.getLong(cursor.getColumnIndex(TaskEntry._ID)));
+        task.setTaskTitle(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_TITLE)));
+        task.setCategory(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_CATEGORY)));
+        task.setPriority(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_PRIORITY)));
+        task.setExtraInfoType(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO_TYPE)));
+        task.setExtraInfo(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO)));
+        task.setDueDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DUE_DATE)));
+        task.setDueTime(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DUE_TIME)));
+        task.setTagRepeat(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TAG_REPEAT)));
+        task.setRepeatFrequency(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_REPEAT_FREQUENCY)));
+        task.setTagCompleted(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TAG_COMPLETED)));
+        task.setDateAdded(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DATE_ADDED)));
+        task.setDateCompleted(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DATE_COMPLETED)));
+
+        return task;
     }
 }

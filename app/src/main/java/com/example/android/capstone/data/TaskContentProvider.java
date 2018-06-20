@@ -118,6 +118,7 @@ public class TaskContentProvider extends ContentProvider {
 
         mColumnsToValidate = new ArrayList<>();
         mColumnsToValidate.add(TaskEntry.COLUMN_TASK_TITLE);
+        mColumnsToValidate.add(TaskEntry.COLUMN_CATEGORY);
         mColumnsToValidate.add(TaskEntry.COLUMN_EXTRA_INFO_TYPE);
         mColumnsToValidate.add(TaskEntry.COLUMN_TAG_REPEAT);
         mColumnsToValidate.add(TaskEntry.COLUMN_TAG_COMPLETED);
@@ -292,6 +293,7 @@ public class TaskContentProvider extends ContentProvider {
     public boolean validateInput(ContentValues values, ArrayList<String> columnArgs) {
 
         String taskTitle;
+        String taskCategory;
         String extraInfoType;
         String extraInfo;
         int tagRepeat;
@@ -305,15 +307,22 @@ public class TaskContentProvider extends ContentProvider {
             if (column.equals(TaskEntry.COLUMN_TASK_TITLE)) {
                 // check for empty Task Title
                 taskTitle = values.getAsString(TaskEntry.COLUMN_TASK_TITLE);
-                if (Utils.isEmptyString(taskTitle)) { Timber.e(taskTitle);
+                if (Utils.isEmptyString(taskTitle)) {
                     throw new IllegalArgumentException(mContext.getString(R.string.error_missing_title));
+                }
+
+            } else if (column.equals(TaskEntry.COLUMN_CATEGORY)) {
+                // check for empty Task Category
+                taskCategory = values.getAsString(TaskEntry.COLUMN_CATEGORY);
+                if (Utils.isEmptyString(taskCategory)) {
+                    throw new IllegalArgumentException(mContext.getString(R.string.error_missing_category));
                 }
 
             } else if (column.equals(TaskEntry.COLUMN_EXTRA_INFO_TYPE)) {
                 // check if Extra Info is available if Extra Info Type exists
                 extraInfoType = values.getAsString(TaskEntry.COLUMN_EXTRA_INFO_TYPE);
                 extraInfo = values.getAsString(TaskEntry.COLUMN_EXTRA_INFO);
-                if (!Utils.isEmptyString(extraInfoType) && (Utils.isEmptyString(extraInfo))) {
+                if (!extraInfoType.equals(mContext.getString(R.string.hint_spinner_extrainfo)) && (Utils.isEmptyString(extraInfo))) {
                     throw new IllegalArgumentException(mContext.getString(R.string.error_missing_extra_info));
                 }
 

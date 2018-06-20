@@ -3,7 +3,7 @@ package com.example.android.capstone.data;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import com.example.android.capstone.helper.Constants;
+import com.example.android.capstone.helper.Utils;
 
 /**
  * Database schema for Task Database
@@ -82,53 +82,47 @@ public class TaskContract {
         public final static String RES_COLUMN_COUNT_TASKS_NODATE = "count_nodate";
         public final static String RES_COLUMN_TAG_DUE_DATE = "tag_due_date";
 
-        // Projection clause for count queries
+        // Projection for count queries
         public final static String PROJECTION_TASKS_TODAY = QUERY_COUNT + RES_COLUMN_COUNT_TASKS_TODAY;
 
-        // Projection clause for Lists that should display tasks order by due date ASC,
+        // Projection for Lists that should display tasks order by due date ASC,
         // but tasks with no due date shown at last
-        public final static String PROJECTION_TASKS_LIST = "*, CASE WHEN " + COLUMN_DUE_DATE + " = '' THEN 1 "
-                    + "WHEN " + COLUMN_DUE_DATE + " != '' THEN 2 END " + RES_COLUMN_TAG_DUE_DATE;
+        public final static String PROJECTION_TASKS_LIST = _ID + ", " + COLUMN_TASK_TITLE + ", "
+                + COLUMN_CATEGORY + ", " + COLUMN_PRIORITY
+                + ", " + COLUMN_EXTRA_INFO_TYPE + ", " + COLUMN_EXTRA_INFO + ", " + COLUMN_DUE_DATE
+                + ", " + COLUMN_DUE_TIME + ", " + COLUMN_TAG_REPEAT + ", " + COLUMN_REPEAT_FREQUENCY
+                + ", " + COLUMN_TAG_COMPLETED + ", " + COLUMN_DATE_COMPLETED + ", " + COLUMN_DATE_ADDED
+                + ", " + COLUMN_DATE_UPDATED
+                + ", CASE WHEN " + COLUMN_DUE_DATE + " = '' THEN 1 "
+                + "WHEN " + COLUMN_DUE_DATE + " != '' THEN 2 END " + RES_COLUMN_TAG_DUE_DATE;
+
+        // Projection for Counts displayed in Dashboard
+        public final static String PROJECTION_COUNTS = " COUNT(*) AS " + RES_COLUMN_COUNT_TASKS_ALL + ","
+                + " SUM(CASE WHEN " + COLUMN_DUE_DATE + " < '" + Utils.getDateToday() + "' THEN 1 ELSE 0 END)"
+                + " AS " + RES_COLUMN_COUNT_TASKS_PAST + ","
+
+                + " SUM(CASE WHEN " + COLUMN_DUE_DATE + " = '" + Utils.getDateToday() + "' THEN 1 ELSE 0 END)"
+                + " AS " + RES_COLUMN_COUNT_TASKS_TODAY + ","
+
+                + " SUM(CASE WHEN " + COLUMN_DUE_DATE + " = '" + Utils.getDateTomorrow() + "' THEN 1 ELSE 0 END)"
+                + " AS " + RES_COLUMN_COUNT_TASKS_TOMORROW + ","
+
+                + " SUM(CASE WHEN (" + COLUMN_DUE_DATE + " > '" + Utils.getDateToday() + "' AND "
+                + COLUMN_DUE_DATE + " <= '" + Utils.getDateWeek() + "') THEN 1 ELSE 0 END)"
+                + " AS " + RES_COLUMN_COUNT_TASKS_WEEK + ","
+
+                + " SUM(CASE WHEN " + COLUMN_DUE_DATE + " = '' THEN 1 ELSE 0 END)"
+                + " AS " + RES_COLUMN_COUNT_TASKS_NODATE + " ";
 
 
-        /**
-         * Method to get return an integer value of the priority based on the String priority value
-         *
-         * @return priority (1, 2, 3 or 0)
-         */
-        public static int getPriority(String priorityText) {
-            if (priorityText.equals(Constants.TASK_PRIORITY_HIGH)) {
-                return 1;
-            } else if (priorityText.equals(Constants.TASK_PRIORITY_MEDIUM)) {
-                return 2;
-            } else if (priorityText.equals(Constants.TASK_PRIORITY_LOW)) {
-                return 3;
-            }
+        // Possible values for Task Completed Tag
+        public static final int TAG_COMPLETE = 1;
+        public static final int TAG_NOT_COMPLETE = 0;
 
-            return 0;
-        }
+        // Possible values for Task Repeat Tag
+        public static final int TAG_REPEAT = 1;
+        public static final int TAG_NOT_REPEAT = 0;
 
-        /**
-         * Method to get return the Repeat Frequency Tag
-         *
-         * @param frequency text
-         * @return tag (D, M, W)
-         */
-        private static final String TAG_DAILY = "D";
-        private static final String TAG_WEEKLY = "W";
-        private static final String TAG_MONTHLY = "M";
-
-        public static String getRepeatFrequency(String frequencyText) {
-            if (frequencyText.equals(Constants.TASK_REPEAT_DAILY)) {
-                return TAG_DAILY;
-            } else if (frequencyText.equals(Constants.TASK_REPEAT_MONTHLY)) {
-                return TAG_MONTHLY;
-            } else if (frequencyText.equals(Constants.TASK_REPEAT_WEEKLY)) {
-                return TAG_WEEKLY;
-            }
-
-            return null;
-        }
     }
 
 }

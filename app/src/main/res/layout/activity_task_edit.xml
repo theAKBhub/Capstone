@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.TaskEditActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_taskedit"
+            style="@style/AppbarLayout"
+            android:elevation="@dimen/dimen_4dp"
+            tools:ignore="UnusedAttribute">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_taskedit"
+                style="@style/ToolbarLayout"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <TextView
+            android:id="@+id/textview_error_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16dp"
+            android:background="@color/colorErrorView"
+            android:gravity="center"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/textsize_small"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar_taskedit"
+            tools:text="@string/error_save_msg"/>
+
+        <EditText
+            android:id="@+id/edittext_task_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:ems="10"
+            android:hint="@string/default_edit_task_title"
+            android:inputType="textCapSentences"
+            android:maxLength="@integer/task_title_maxlength"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_error_msg"/>
+
+        <FrameLayout
+            android:id="@+id/flayout_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/shape_rectangle_outline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edittext_task_title">
+
+            <Spinner
+                android:id="@+id/spinner_task_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="@dimen/textsize_small"/>
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/textview_label_optional"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:layout_marginBottom="@dimen/dimen_16dp"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:text="@string/label_optional"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flayout_category"/>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_16dp"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:background="@drawable/shape_rectangle_outline"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_label_optional">
+
+            <Spinner
+                android:id="@+id/spinner_task_priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="@dimen/textsize_small"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/flayout_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16dp"
+            android:layout_marginBottom="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:background="@drawable/shape_rectangle_outline"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_label_optional">
+
+            <Spinner
+                android:id="@+id/spinner_repeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="@dimen/textsize_small"/>
+
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/button_due_date"
+            android:layout_width="@dimen/dimen_48dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/label_due_on"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frameLayout"
+            app:srcCompat="@drawable/ic_date"/>
+
+        <TextView
+            android:id="@+id/textview_due_date"
+            android:layout_width="@dimen/dimen_144dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:gravity="center_vertical"
+            android:text="@string/label_due_on"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintLeft_toRightOf="@id/button_due_date"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"/>
+
+        <ImageButton
+            android:id="@+id/button_due_time"
+            android:layout_width="@dimen/dimen_48dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="@string/label_at_time"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintRight_toLeftOf="@id/textview_due_time"
+            app:layout_constraintTop_toBottomOf="@id/frameLayout"
+            app:srcCompat="@drawable/ic_time"/>
+
+        <TextView
+            android:id="@+id/textview_due_time"
+            android:layout_width="@dimen/dimen_60dp"
+            android:layout_height="@dimen/dimen_48dp"
+            android:layout_margin="@dimen/dimen_16dp"
+            android:gravity="center_vertical"
+            android:text="@string/label_at_time"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/textview_due_date"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"/>
+
+        <FrameLayout
+            android:id="@+id/flayout_extra_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:layout_marginStart="@dimen/dimen_16dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:background="@drawable/shape_rectangle_outline"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_due_date">
+
+            <Spinner
+                android:id="@+id/spinner_extra_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:textSize="@dimen/textsize_small"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textview_extra_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dimen_16dp"
+            android:layout_marginLeft="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:padding="@dimen/dimen_16dp"
+            android:background="@color/colorGrayLight"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/textsize_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/flayout_extra_info"/>
+
+        <TextView
+            android:id="@+id/textview_alert_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_16dp"
+            android:text="@string/info_location_policy"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/textsize_xsmall"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_extra_info"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_60dp"
+            android:layout_marginTop="@dimen/dimen_60dp"
+            android:paddingBottom="@dimen/dimen_60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_extra_info"/>
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

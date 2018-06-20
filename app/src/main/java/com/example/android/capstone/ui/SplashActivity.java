@@ -1,13 +1,8 @@
 package com.example.android.capstone.ui;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
-import com.example.android.capstone.data.TaskContract.TaskEntry;
-import java.util.Random;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -16,14 +11,15 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Launch Dashboard
-        startActivity(new Intent(this, DashboardActivity.class));
+        Intent intent = new Intent(this, DashboardActivity.class);
+        startActivity(intent);
 
         // Close splash screen
         finish();
 
-        boolean insert = false;
+      /*  boolean insert = false;
 
-        if (!insert) {
+        if (insert) {
             Uri uri;
 
             for (int i=0; i<5; i++) {
@@ -31,11 +27,13 @@ public class SplashActivity extends AppCompatActivity {
                 values.put(TaskEntry.COLUMN_TASK_TITLE, "Task " + i);
                 values.put(TaskEntry.COLUMN_CATEGORY, "Event");
                 values.put(TaskEntry.COLUMN_PRIORITY, (new Random().nextInt(4)));
-                values.put(TaskEntry.COLUMN_DUE_DATE, "2018-06-1" + (i+4));
+                values.put(TaskEntry.COLUMN_EXTRA_INFO_TYPE, Constants.EXTRA_INFO_LOCATION);
+                values.put(TaskEntry.COLUMN_EXTRA_INFO, "Edinburgh UK");
+                values.put(TaskEntry.COLUMN_DUE_DATE, "2018-06-1" + i);
                 values.put(TaskEntry.COLUMN_TAG_REPEAT, "0");
                 values.put(TaskEntry.COLUMN_REPEAT_FREQUENCY, "");
                 values.put(TaskEntry.COLUMN_TAG_COMPLETED, "0");
-                values.put(TaskEntry.COLUMN_DATE_ADDED, "2018-06-14");
+                values.put(TaskEntry.COLUMN_DATE_ADDED, "2018-05-1" + (i+5));
                 values.put(TaskEntry.COLUMN_DATE_COMPLETED, "");
                 values.put(TaskEntry.COLUMN_DATE_UPDATED, "2018-06-14");
 
@@ -48,18 +46,18 @@ public class SplashActivity extends AppCompatActivity {
             }
 
             ContentValues values = new ContentValues();
-            values.put(TaskEntry.COLUMN_TASK_TITLE, "Task no date");
+            values.put(TaskEntry.COLUMN_TASK_TITLE, "Task 150");
             values.put(TaskEntry.COLUMN_CATEGORY, "Event");
             values.put(TaskEntry.COLUMN_PRIORITY, 3);
             values.put(TaskEntry.COLUMN_EXTRA_INFO_TYPE, "Email");
             values.put(TaskEntry.COLUMN_EXTRA_INFO, "abc@abc.com");
-            values.put(TaskEntry.COLUMN_DUE_DATE, "");
+            values.put(TaskEntry.COLUMN_DUE_DATE, "2018-05-01");
             values.put(TaskEntry.COLUMN_DUE_TIME, "");
             values.put(TaskEntry.COLUMN_TAG_REPEAT, "0");
             values.put(TaskEntry.COLUMN_REPEAT_FREQUENCY, "");
-            values.put(TaskEntry.COLUMN_TAG_COMPLETED, "0");
+            values.put(TaskEntry.COLUMN_TAG_COMPLETED, "1");
             values.put(TaskEntry.COLUMN_DATE_ADDED, "2018-06-14");
-            values.put(TaskEntry.COLUMN_DATE_COMPLETED, "");
+            values.put(TaskEntry.COLUMN_DATE_COMPLETED, "2018-06-16");
             values.put(TaskEntry.COLUMN_DATE_UPDATED, "2018-06-14");
 
             uri = getContentResolver().insert(TaskEntry.CONTENT_URI, values);
@@ -69,7 +67,8 @@ public class SplashActivity extends AppCompatActivity {
                 Toast.makeText(this, "Record inserted", Toast.LENGTH_SHORT).show();
             }
 
-        }
+
+        } */
 
     }
 }

@@ -18,6 +18,9 @@ import com.example.android.capstone.helper.Constants;
  */
 public class DashboardGridAdapter extends BaseAdapter {
 
+    private static final int CELLS_TWO = 2;
+    private static final int CELLS_THREE = 3;
+
     private Context mContext;
     private int[] mTaskCounts;
     private String[] mTaskHeadings;
@@ -68,12 +71,12 @@ public class DashboardGridAdapter extends BaseAdapter {
             holder.textviewTaskCount.setText(String.valueOf(mTaskCounts[position]));
         }
 
-        if (holder.gridCols == 2) {
+        if (holder.gridCols == CELLS_TWO) {
             // portrait mode - divide screen space in 3 rows
-            gridView.setMinimumHeight(mGridHeight / 3);
-        } else if (holder.gridCols == 3) {
+            gridView.setMinimumHeight(mGridHeight / CELLS_THREE);
+        } else if (holder.gridCols == CELLS_THREE) {
             // landscape mode - divide screen space in 2 rows
-            gridView.setMinimumHeight(mGridHeight / 2);
+            gridView.setMinimumHeight(mGridHeight / CELLS_TWO);
         }
 
         return gridView;
@@ -98,7 +101,7 @@ public class DashboardGridAdapter extends BaseAdapter {
 
     /**
      * Formats Dashboard panel headings before displaying
-     * @param position
+     *
      * @return heading
      */
     private String getGridPanelHeading(int position) {

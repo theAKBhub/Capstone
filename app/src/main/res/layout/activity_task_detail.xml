@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_layout"
+        style="@style/AppbarLayout"
+        android:layout_height="@dimen/appbar_expanded"
+        android:elevation="@dimen/dimen_4dp"
+        tools:ignore="UnusedAttribute">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/appbar_expanded"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/imageview_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_pink_gradient_vertical"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|bottom"
+                    android:padding="@dimen/dimen_16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textview_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_large"
+                        tools:text="@string/default_task_title"/>
+
+                    <TextView
+                        android:id="@+id/textview_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_medium"
+                        tools:text="@string/default_task_title"/>
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_detail_activity"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_24dp"
+            android:padding="@dimen/dimen_16dp">
+
+            <TextView
+                android:id="@+id/textview_hdg_priority"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/default_task_priority"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/textview_priority"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_hdg_priority"
+                tools:text="@string/default_task_priority"/>
+
+            <TextView
+                android:id="@+id/textview_hdg_date"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@string/label_due_on"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_priority"/>
+
+            <TextView
+                android:id="@+id/textview_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_hdg_date"
+                tools:text="@string/default_due_date"/>
+
+            <TextView
+                android:id="@+id/textview_hdg_time"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@string/label_at_time"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_date"/>
+
+            <TextView
+                android:id="@+id/textview_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_hdg_time"
+                tools:text="@string/default_due_time"/>
+
+            <TextView
+                android:id="@+id/textview_hdg_repeat"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@string/default_repeat"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_time"/>
+
+            <TextView
+                android:id="@+id/textview_repeat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_hdg_repeat"
+                tools:text="@string/default_repeat"/>
+
+            <TextView
+                android:id="@+id/textview_hdg_extra"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:text="@string/default_extra_info"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_repeat"/>
+
+            <TextView
+                android:id="@+id/textview_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_hdg_extra"
+                tools:text="@string/default_extra_info"/>
+
+            <Button
+                android:id="@+id/button_extra"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dimen_48dp"
+                android:layout_marginTop="@dimen/dimen_16dp"
+                android:background="@color/colorAccent"
+                android:padding="@dimen/dimen_16dp"
+                android:textColor="@color/colorWhite"
+                android:visibility="invisible"
+                android:text="@string/default_extra_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textview_extra"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_60dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_extra"
+                android:paddingBottom="@dimen/dimen_60dp"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_edit_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:contentDescription="@string/default_edit_task_title"
+        android:focusable="true"
+        app:elevation="@dimen/fab_elevation"
+        app:fabSize="normal"
+        app:layout_anchor="@id/appbar_layout"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/ic_edit"/>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/clayout_tasklist"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -43,18 +44,36 @@
             android:layout_height="match_parent"
             android:paddingBottom="@dimen/dimen_8dp"/>
 
-        <TextView
-            android:id="@+id/textview_empty_state"
+        <LinearLayout
+            android:id="@+id/llayout_empty_state"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:drawablePadding="@dimen/dimen_16dp"
-            android:drawableTop="@drawable/ic_deck_chair"
-            android:gravity="center"
+            android:layout_height="match_parent"
+            android:background="@color/colorGrayLight"
             android:visibility="gone"
-            android:text="@string/info_no_tasks"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/textsize_medium"/>
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_80dp"
+                android:layout_marginBottom="@dimen/dimen_32dp"
+                android:contentDescription="@string/info_no_tasks"
+                app:srcCompat="@drawable/ic_deck_chair"/>
+
+            <TextView
+                android:id="@+id/textview_empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawablePadding="@dimen/dimen_16dp"
+                android:drawable="@drawable/ic_deck_chair"
+                android:gravity="center"
+                android:text="@string/info_no_tasks"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/textsize_medium"/>
+        </LinearLayout>
+
 
     </FrameLayout>
 

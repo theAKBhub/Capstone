@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.capstone.R;
 import com.example.android.capstone.data.TaskContract.TaskEntry;
+import com.example.android.capstone.helper.Utils;
 
 /**
  * CursorAdapter class that is used to display relevant Task details in the RecyclerView
@@ -24,14 +26,32 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
 
     private Cursor mCursor;
     private Context mContext;
+    final private ItemClickListener mItemClickListener;
+    final private CheckClickListener mCheckClickListener;
+
+    /**
+     * Interface to handle RecyclerView onClick event
+     */
+    public interface ItemClickListener {
+
+        void onItemClickListener(int itemId);
+    }
+
+    public interface CheckClickListener {
+
+        void onCheckClickListener(int itemId);
+    }
 
     /**
      * Default Constructor to initialize the Context
      *
      * @param mContext the current Context
      */
-    public TaskCursorAdapter(Context mContext) {
+    public TaskCursorAdapter(Context mContext, ItemClickListener itemClickListener,
+            CheckClickListener checkClickListener) {
         this.mContext = mContext;
+        mItemClickListener = itemClickListener;
+        mCheckClickListener = checkClickListener;
     }
 
     /**
@@ -49,38 +69,43 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskCursorAdapter.TaskViewHolder holder, int position) {
-
-        // get column indices
-        int idIndex = mCursor.getColumnIndex(TaskEntry._ID);
-        int titleIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_TASK_TITLE);
-        int categoryIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_CATEGORY);
-        int completedIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_TAG_COMPLETED);
-        int dateIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_DATE);
-        int timeIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_TIME);
-        int priorityIndex = mCursor.getColumnIndex(TaskEntry.COLUMN_PRIORITY);
+    public void onBindViewHolder(@NonNull final TaskCursorAdapter.TaskViewHolder holder, int position) {
 
         // move cursor to desired position
         mCursor.moveToPosition(position);
 
         // get values from cursor at that position
-        long taskId = mCursor.getInt(idIndex);
-        String taskTitle = mCursor.getString(titleIndex);
-        String taskCategory = mCursor.getString(categoryIndex);
-        int completed = mCursor.getInt(completedIndex);
-        String dueDate = mCursor.getString(dateIndex);
-        String dueTime = mCursor.getString(timeIndex);
-        int priority = mCursor.getInt(priorityIndex);
+        final long taskId = mCursor.getLong(mCursor.getColumnIndex(TaskEntry._ID));
+        final String taskTitle = mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_TASK_TITLE));
+        String taskCategory = mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_CATEGORY));
+        int completed = mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_TAG_COMPLETED));
+        String dueDate = mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_DATE));
+        String dueTime = mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_TIME));
+        int priority = mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_PRIORITY));
+        int tagRepeat = mCursor.getInt(mCursor.getColumnIndex(TaskEntry.COLUMN_TAG_REPEAT));
+        String repeat = mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_REPEAT_FREQUENCY));
 
         // set values to respective views
         holder.itemView.setTag(taskId);
         holder.textviewTaskTitle.setText(taskTitle);
-        holder.textviewTaskCategory.setText(taskCategory);
-        holder.textviewDueDate.setText(dueDate);
-        holder.textviewDueTime.setText(dueTime);
+        if (tagRepeat == 0) {
+            holder.textviewTaskCategory.setText(taskCategory);
+            holder.textviewTaskCategory.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        } else {
+            String details = taskCategory + " | " + repeat;
+            holder.textviewTaskCategory.setText(details);
+            holder.textviewTaskCategory.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_repeat, 0);
+            holder.textviewTaskCategory.setCompoundDrawablePadding(8);
+        }
+
+        holder.textviewDueDate.setText(Utils.getDisplayListDate(dueDate));
+
+        if (!Utils.isEmptyString(dueTime)) {
+            holder.textviewDueTime.setText(dueTime);
+        }
 
         Drawable resourceId;
-        resourceId = (completed == 1) ? holder.squareChecked : holder.squareEmpty;
+        resourceId = (completed == TaskEntry.TAG_COMPLETE) ? holder.squareChecked : holder.squareEmpty;
         holder.buttonCompletedCheck.setImageDrawable(resourceId);
 
         switch (priority) {
@@ -98,6 +123,13 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
                 holder.viewPriority.setBackgroundColor(holder.colorWhite);
                 break;
         }
+
+        holder.buttonCompletedCheck.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCheckClickListener.onCheckClickListener(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -171,8 +203,9 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
             int adapterPosition = getAdapterPosition();
+            mItemClickListener.onItemClickListener(adapterPosition);
         }
     }
 }

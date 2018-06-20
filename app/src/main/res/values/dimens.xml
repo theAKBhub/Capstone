@@ -23,7 +23,7 @@
     <dimen name="fab_elevation">@dimen/dimen_6dp</dimen>
     <dimen name="fab_press_translation_z">12dp</dimen>
     <dimen name="fab_margin">@dimen/dimen_24dp</dimen>
-    <dimen name="appbar_expanded">280dp</dimen>
+    <dimen name="appbar_expanded">150dp</dimen>
 
     <!-- Font Sizes -->
     <dimen name="textsize_xsmall">12sp</dimen>
@@ -34,6 +34,7 @@
     <dimen name="textsize_xlarge">34sp</dimen>
 
     <item format="integer" name="grid_cols" type="integer">2</item>
+    <item format="integer" name="task_title_maxlength" type="integer">50</item>
 
     <!-- Widget Dimensions -->
     <dimen name="widget_margin">8dp</dimen>

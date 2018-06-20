@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="Preference Group 1">
+
+        <SwitchPreferenceCompat
+            android:key="pref_switch"
+            android:title="Switch Preference"
+            android:summary="Switch Summary"
+            android:defaultValue="true" />
+
+        <EditTextPreference
+            android:key="pref_edittext"
+            android:title="EditText Preference"
+            android:summary="EditText Summary"
+            android:defaultValue="Some text"/>
+
+        <CheckBoxPreference
+            android:key="pref_checkbox"
+            android:title="Checkbox Preference"
+            android:summary="Checkbox Summary"
+            android:defaultValue="false"/>
+    </android.support.v7.preference.PreferenceCategory>
+
+    <android.support.v7.preference.PreferenceCategory
+        android:title="Preference Group 2">
+
+        <com.example.android.capstone.settings.TimePreference
+            style="@style/AppPreference.DialogPreference"
+            android:defaultValue="90"
+            android:key="@string/pref_pref4"
+            android:summary="Time Summary"
+            android:title="Time Preference"/>
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

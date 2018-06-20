@@ -13,33 +13,42 @@
         android:background="@color/colorWidgetBackground"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/widget_layout_main"
+        <TextView
+            android:id="@+id/textview_widget_header"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/dimen_16dp"
+            android:paddingStart="@dimen/dimen_16dp"
+            android:paddingTop="@dimen/dimen_8dp"
+            android:paddingBottom="@dimen/dimen_8dp"
+            android:paddingRight="@dimen/dimen_8dp"
+            android:paddingEnd="@dimen/dimen_8dp"
+            android:text="@string/title_pending_tasks"
+            android:textSize="@dimen/textsize_medium"
             android:background="@color/colorPrimary"
-            android:orientation="horizontal">
+            android:textColor="@color/colorWhite"/>
 
-            <ImageView
-                android:id="@+id/widget_img_launcher"
-                android:layout_width="@dimen/dimen_32dp"
-                android:layout_height="@dimen/dimen_32dp"
-                android:layout_gravity="center_vertical"
-                android:background="@color/colorPrimary"
-                android:padding="@dimen/dimen_6dp"
-                android:src="@drawable/ic_task_checking"/>
+        <!--<LinearLayout-->
+            <!--android:id="@+id/widget_layout_main"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/colorPrimary"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:id="@+id/textview_widget_header"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="@dimen/dimen_8dp"
-                android:text="@string/title_pending_tasks"
-                android:textSize="@dimen/textsize_medium"
-                android:textColor="@color/colorWhite"/>
-        </LinearLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/widget_img_launcher"-->
+                <!--android:layout_width="@dimen/dimen_32dp"-->
+                <!--android:layout_height="@dimen/dimen_32dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:padding="@dimen/dimen_6dp"-->
+                <!--android:contentDescription="@string/app_name"-->
+                <!--app:srcCompat="@drawable/ic_task_checking"/>-->
+
+            <!---->
+        <!--</LinearLayout>-->
 
         <ListView
             android:id="@+id/listview_widget"

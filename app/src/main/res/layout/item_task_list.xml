@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
@@ -27,8 +28,11 @@
             android:layout_marginRight="@dimen/dimen_16dp"
             android:layout_gravity="center"
             android:background="@android:color/white"
+            android:contentDescription="@string/default_check_task"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_square"/>
+            app:srcCompat="@drawable/ic_square"/>
 
         <View
             android:layout_width="@dimen/dimen_1dp"
@@ -47,7 +51,7 @@
                 android:id="@+id/textview_task_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/textsize_small"
                 tools:text="@string/default_task_title"/>
 
@@ -64,7 +68,7 @@
         <LinearLayout
             android:layout_width="@dimen/dimen_80dp"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <TextView

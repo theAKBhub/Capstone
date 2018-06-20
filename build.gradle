@@ -32,6 +32,9 @@ ext {
     butterknifeLibraryVersion = '8.8.1'
     espressoLibraryVersion = '3.0.2'
     testRunnerVersion = '1.0.2'
+    gmsVision = '15.0.2'
+    gmsLocation = '15.0.1'
+
 }
 
 
