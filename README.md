@@ -36,6 +36,12 @@ I created a simple **ToDo List App** as part of this project will allow keeping 
 <a href="https://user-images.githubusercontent.com/22053146/61820910-ec332380-ae4d-11e9-80dd-42e1a29f6cdc.jpg"><img src="https://user-images.githubusercontent.com/22053146/61820910-ec332380-ae4d-11e9-80dd-42e1a29f6cdc.jpg" width="380" height="696" /></a>
 
 
+#### References used in this project
+![Barcode Reader – official google samples](https://github.com/googlesamples/android-vision/tree/master/visionSamples/barcode-reader)<br/>
+![Custom Preferences Screen](https://medium.com/@JakobUlbrich/building-a-settings-screen-for-android-part-3-ae9793fd31ec)
+
+
+
 ```
 PROJECT LICENSE
 
