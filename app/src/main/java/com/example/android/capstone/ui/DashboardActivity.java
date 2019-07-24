@@ -69,40 +69,7 @@ public class DashboardActivity extends AppCompatActivity implements LoaderManage
                 openTasksList(position);
             }
         });
-
-
-
-
-
-        //////////////////////////
-     /*  TaskDbHelper dbHelper = new TaskDbHelper(this);
-        SQLiteDatabase sqLiteDBReadable = dbHelper.getReadableDatabase();
-        String rdate = "2018-06-19";
-        String tdate = "2018-06-15";
-
-        String query = "select task_title, (julianday('" + Utils.getDateToday() + "') - julianday(date_added)) as diff "
-                + "FROM tasks "
-                + "WHERE extra_info_type LIKE '%" + Constants.EXTRA_INFO_LOCATION + "%'";
-
-        Cursor cursor =
-                //sqLiteDBReadable.rawQuery("SELECT * FROM " + TaskEntry.TABLE_NAME + " WHERE tag_completed = 1", null);
-                //sqLiteDBReadable.rawQuery("SELECT * FROM tasks WHERE (julianday('" + rdate + "')-julianday(date_added)) < 1  ;" , null);
-                sqLiteDBReadable.rawQuery(query, null);
-        DatabaseUtils.dumpCursor(cursor); */
-
-
-//        findViewById(R.id.btn).setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-//                startActivityForResult(intent, 1);
-//            }
-//        });
-        //////////////////////////
-
     }
-
-    ////////////////////////////////////////
 
     /**
      * Method invoked after this activity has been paused or restarted
@@ -253,17 +220,10 @@ public class DashboardActivity extends AppCompatActivity implements LoaderManage
 
     /**
      * Method to launch Tasks List
-     * @param taskFilterIndex
      */
     public void openTasksList(int taskFilterIndex) {
         Intent intent = new Intent(this, TaskListActivity.class);
         intent.putExtra(Constants.INTENT_KEY_TASK_FILTER, taskFilterIndex);
-
-//        if (Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-//            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this);
-//            startActivity(intent, options.toBundle());
-//        } else {
-            startActivity(intent);
-        //}
+        startActivity(intent);
     }
 }

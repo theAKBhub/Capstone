@@ -46,48 +46,30 @@
 
         <LinearLayout
             android:id="@+id/llayout_empty_state"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorGrayLight"
-            android:visibility="gone"
-            android:orientation="vertical">
+            style="@style/ListEmptyLayout">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dimen_80dp"
-                android:layout_marginBottom="@dimen/dimen_32dp"
                 android:contentDescription="@string/info_no_tasks"
-                app:srcCompat="@drawable/ic_deck_chair"/>
+                app:srcCompat="@drawable/ic_deck_chair"
+                style="@style/ListEmptyStateImage"/>
 
             <TextView
                 android:id="@+id/textview_empty_state"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawablePadding="@dimen/dimen_16dp"
-                android:drawable="@drawable/ic_deck_chair"
-                android:gravity="center"
                 android:text="@string/info_no_tasks"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/textsize_medium"/>
+                style="@style/ListEmptyStateText"/>
         </LinearLayout>
-
 
     </FrameLayout>
 
     <!-- Floating action button that launches screen to add task -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
         app:elevation="@dimen/fab_elevation"
+        android:contentDescription="@string/title_taskedit"
         app:fabSize="normal"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_anchor="@id/recyclerViewTasks"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/ic_edit"/>
+        app:srcCompat="@drawable/ic_edit"
+        style="@style/ListFAB"/>
+
 </android.support.design.widget.CoordinatorLayout>

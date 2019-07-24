@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- =========================================================
+            Styles defined for RecyclerView List Items
+         ========================================================= -->
+
+    <style name="ListItemTaskTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
+    </style>
+
+    <style name="ListItemTaskDetails">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/textsize_xsmall</item>
+    </style>
+
+    <style name="ListItemRepeatImage">
+        <item name="android:layout_toRightOf">@id/textview_repeat</item>
+        <item name="android:layout_toEndOf">@id/textview_repeat</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_8dp</item>
+        <item name="android:layout_marginStart">@dimen/dimen_8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="ListItemCheckImage">
+        <item name="android:layout_width">@dimen/dimen_24dp</item>
+        <item name="android:layout_height">@dimen/dimen_24dp</item>
+        <item name="android:layout_marginRight">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_16dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
+    <style name="ListItemDateTime">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/textsize_xsmall</item>
+    </style>
+
+    <style name="ListEmptyLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/colorGrayLight</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ListEmptyStateImage">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_32dp</item>
+    </style>
+
+    <style name="ListEmptyStateText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/dimen_16dp</item>
+        <item name="android:drawable">@drawable/ic_deck_chair</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
+    </style>
+
+    <style name="ListFAB">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">@dimen/fab_margin</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+</resources>

@@ -3,37 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <android.support.v7.preference.PreferenceCategory
-        android:title="Preference Group 1">
+        android:title="@string/settings_group_order">
 
-        <SwitchPreferenceCompat
-            android:key="pref_switch"
-            android:title="Switch Preference"
-            android:summary="Switch Summary"
-            android:defaultValue="true" />
-
-        <EditTextPreference
-            android:key="pref_edittext"
-            android:title="EditText Preference"
-            android:summary="EditText Summary"
-            android:defaultValue="Some text"/>
-
-        <CheckBoxPreference
-            android:key="pref_checkbox"
-            android:title="Checkbox Preference"
-            android:summary="Checkbox Summary"
-            android:defaultValue="false"/>
+        <ListPreference
+            android:defaultValue="@string/settings_order_by_default"
+            android:entries="@array/settings_order_by_labels"
+            android:entryValues="@array/settings_order_by_values"
+            android:key="@string/settings_order_by_key"
+            android:title="@string/settings_order_by_label" />
     </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory
-        android:title="Preference Group 2">
+        android:title="@string/settings_group_alarm">
+
+        <SwitchPreferenceCompat
+            android:key="pref_switch"
+            android:title="@string/settings_switch_label"
+            android:summary="@string/settings_alarm_on"
+            android:defaultValue="true" />
 
         <com.example.android.capstone.settings.TimePreference
             style="@style/AppPreference.DialogPreference"
             android:defaultValue="90"
-            android:key="@string/pref_pref4"
-            android:summary="Time Summary"
-            android:title="Time Preference"/>
+            android:key="@string/settings_alarm_key"
+            android:title="@string/settings_alarm_label"/>
 
     </android.support.v7.preference.PreferenceCategory>
-
 </android.support.v7.preference.PreferenceScreen>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_70dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/view_priority"
+            android:layout_width="@dimen/dimen_8dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"/>
+
+        <ImageButton
+            android:id="@+id/button_check"
+            style="@style/ListItemCheckImage"
+            android:layout_marginRight="@dimen/dimen_32dp"
+            android:layout_marginEnd="@dimen/dimen_32dp"
+            android:layout_marginLeft="@dimen/dimen_32dp"
+            android:layout_marginStart="@dimen/dimen_32dp"
+            android:contentDescription="@string/default_check_task"
+            app:srcCompat="@drawable/ic_square"/>
+
+        <View
+            android:layout_width="@dimen/dimen_1dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:layout_marginRight="@dimen/dimen_16dp"
+            android:background="@color/colorGrayLight"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textview_task_title"
+                style="@style/ListItemTaskTitle"
+                app:fontFamily="@font/noto_sans"
+                tools:text="@string/default_task_title"/>
+
+            <include
+                layout="@layout/include_task_list_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="@dimen/dimen_96dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textview_task_date"
+                style="@style/ListItemDateTime"
+                tools:text="@string/default_due_date"/>
+
+            <TextView
+                android:id="@+id/textview_task_time"
+                style="@style/ListItemDateTime"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                tools:text="@string/default_due_time"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- A gray divider line at the bottom of each task -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1dp"
+        android:background="@color/colorGrayLight"/>
+
+</LinearLayout>

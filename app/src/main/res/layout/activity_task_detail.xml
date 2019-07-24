@@ -44,18 +44,14 @@
 
                     <TextView
                         android:id="@+id/textview_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_large"
+                        style="@style/DetailTaskTitle"
+                        app:fontFamily="@font/bree_serif"
                         tools:text="@string/default_task_title"/>
 
                     <TextView
                         android:id="@+id/textview_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/textsize_medium"
+                        style="@style/DetailTaskCategory"
+                        app:fontFamily="@font/roboto_condensed_light"
                         tools:text="@string/default_task_title"/>
                 </LinearLayout>
 
@@ -82,108 +78,95 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_24dp"
-            android:padding="@dimen/dimen_16dp">
+            android:layout_marginTop="@dimen/dimen_32dp"
+            android:padding="@dimen/activity_margin">
 
             <TextView
                 android:id="@+id/textview_hdg_priority"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/DetailHeadings"
                 android:text="@string/default_task_priority"
-                android:textColor="@color/colorPrimary"
+                app:fontFamily="@font/noto_sans"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
+                android:id="@+id/textview_hdg_repeat"
+                style="@style/DetailHeadings"
+                android:textStyle="bold"
+                android:text="@string/default_repeat"
+                app:fontFamily="@font/noto_sans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/textview_hdg_priority"/>
+
+            <TextView
                 android:id="@+id/textview_priority"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:textColor="@color/colorText"
+                style="@style/DetailText"
+                app:fontFamily="@font/noto_sans"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_hdg_priority"
                 tools:text="@string/default_task_priority"/>
 
             <TextView
+                android:id="@+id/textview_repeat"
+                style="@style/DetailText"
+                android:layout_marginTop="@dimen/dimen_4dp"
+                android:text="@string/default_repeat"
+                app:fontFamily="@font/noto_sans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/textview_priority"
+                app:layout_constraintTop_toBottomOf="@id/textview_hdg_repeat"/>
+
+            <TextView
                 android:id="@+id/textview_hdg_date"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16dp"
+                style="@style/DetailHeadings"
+                android:layout_marginTop="@dimen/dimen_32dp"
                 android:text="@string/label_due_on"
-                android:textColor="@color/colorPrimary"
+                app:fontFamily="@font/noto_sans"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_priority"/>
 
             <TextView
+                android:id="@+id/textview_hdg_time"
+                style="@style/DetailHeadings"
+                android:layout_marginTop="@dimen/dimen_32dp"
+                android:text="@string/label_at_time"
+                app:fontFamily="@font/noto_sans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/textview_hdg_date"
+                app:layout_constraintTop_toBottomOf="@id/textview_repeat"/>
+
+            <TextView
                 android:id="@+id/textview_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/DetailText"
                 android:layout_marginTop="@dimen/dimen_4dp"
-                android:textColor="@color/colorText"
+                android:textSize="@dimen/textsize_medium"
+                app:fontFamily="@font/noto_sans"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_hdg_date"
                 tools:text="@string/default_due_date"/>
 
             <TextView
-                android:id="@+id/textview_hdg_time"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16dp"
-                android:text="@string/label_at_time"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_date"/>
-
-            <TextView
                 android:id="@+id/textview_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:textColor="@color/colorText"
-                app:layout_constraintStart_toStartOf="parent"
+                style="@style/DetailText"
+                android:textSize="@dimen/textsize_medium"
+                app:fontFamily="@font/noto_sans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/textview_date"
                 app:layout_constraintTop_toBottomOf="@id/textview_hdg_time"
                 tools:text="@string/default_due_time"/>
 
             <TextView
-                android:id="@+id/textview_hdg_repeat"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16dp"
-                android:text="@string/default_repeat"
-                android:textColor="@color/colorPrimary"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_time"/>
-
-            <TextView
-                android:id="@+id/textview_repeat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:textColor="@color/colorText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_hdg_repeat"
-                tools:text="@string/default_repeat"/>
-
-            <TextView
                 android:id="@+id/textview_hdg_extra"
-                android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16dp"
+                style="@style/DetailHeadings"
+                android:layout_marginTop="@dimen/dimen_32dp"
                 android:text="@string/default_extra_info"
-                android:textColor="@color/colorPrimary"
+                app:fontFamily="@font/noto_sans"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textview_repeat"/>
+                app:layout_constraintTop_toBottomOf="@id/textview_date"/>
 
             <TextView
                 android:id="@+id/textview_extra"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_4dp"
-                android:textColor="@color/colorText"
+                style="@style/DetailText"
+                app:fontFamily="@font/noto_sans"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_hdg_extra"
                 tools:text="@string/default_extra_info"/>
@@ -192,21 +175,21 @@
                 android:id="@+id/button_extra"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_48dp"
-                android:layout_marginTop="@dimen/dimen_16dp"
-                android:background="@color/colorAccent"
+                android:layout_marginTop="@dimen/dimen_24dp"
                 android:padding="@dimen/dimen_16dp"
+                android:background="@color/colorAccent"
+                android:text="@string/default_extra_info"
                 android:textColor="@color/colorWhite"
                 android:visibility="invisible"
-                android:text="@string/default_extra_info"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textview_extra"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_60dp"
+                android:paddingBottom="@dimen/dimen_60dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_extra"
-                android:paddingBottom="@dimen/dimen_60dp"/>
+                app:layout_constraintTop_toBottomOf="@id/button_extra"/>
 
         </android.support.constraint.ConstraintLayout>
 

@@ -1,21 +1,3 @@
-/*
- * Copyright (C) The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * This file and all BarcodeXXX and CameraXXX files in this project edited by
- * Daniell Algar (included due to copyright reason)
- */
 package com.example.android.capstone.barcode;
 
 import android.Manifest;
@@ -28,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -49,13 +32,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 import timber.log.Timber;
 
-public class BarcodeCaptureActivity extends AppCompatActivity implements BarcodeTracker.BarcodeGraphicTrackerCallback {
+public class BarcodeCaptureActivity extends AppCompatActivity implements BarcodeTracker.BarcodeTrackerCallback {
 
     private CameraSource mCameraSource;
 
     @BindView(R.id.preview)
     CameraSourcePreview mPreview;
-
 
     /**
      * Initializes the UI and creates the detector pipeline.
@@ -66,17 +48,73 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
         setContentView(R.layout.barcode_capture);
         ButterKnife.bind(this);
 
-        boolean autoFocus = true;
-        boolean useFlash = false;
-
-        // Check for the camera permission before accessing the camera.  If the
-        // permission is not granted yet, request permission.
-        int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
-        if (rc == PackageManager.PERMISSION_GRANTED) {
-            createCameraSource(autoFocus, useFlash);
+        // Check for camera permission before accessing the camera, and request permission if not granted
+        int requestCode = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+        if (requestCode == PackageManager.PERMISSION_GRANTED) {
+            createCameraSource();
         } else {
             requestCameraPermission();
         }
+    }
+
+    /**
+     * Method to request camera permission.
+     */
+    private void requestCameraPermission() {
+        final String[] permissions = new String[]{Manifest.permission.CAMERA};
+
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.CAMERA)) {
+            Timber.w(getString(R.string.warning_error_getting_permission));
+            ActivityCompat.requestPermissions(this, permissions, Constants.CAMERA_REQUEST_CODE);
+        }
+    }
+
+    /**
+     * Method to starts the camera
+     */
+    @SuppressLint("InlinedApi")
+    private void createCameraSource() {
+        Context context = getApplicationContext();
+
+        // Create a barcode detector and barcode factory instance
+        // Barcode format is specified to detect ALL_FORMATS
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context)
+                .setBarcodeFormats(Barcode.ALL_FORMATS)
+                .build();
+        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(this);
+        barcodeDetector.setProcessor(new MultiProcessor.Builder<>(barcodeFactory).build());
+
+        // Check if the barcode native libraries are already there.
+        // If not GMS will download the libraries to enable barcode detection
+        if (!barcodeDetector.isOperational()) {
+            Timber.w(getString(R.string.warning_camera_detector_dependencies));
+
+            IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
+            boolean isStorageLow = registerReceiver(null, lowstorageFilter) != null;
+
+            // Check if enough storage is available to download the required libraries
+            if (isStorageLow) {
+                Toast.makeText(this, R.string.low_storage_error, Toast.LENGTH_LONG).show();
+                Timber.w(getString(R.string.low_storage_error));
+            }
+        }
+
+        // Creates and starts the camera
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
+        CameraSource.Builder builder = new CameraSource.Builder(getApplicationContext(), barcodeDetector)
+                .setFacing(CameraInfo.CAMERA_FACING_BACK)
+                .setRequestedPreviewSize(metrics.widthPixels, metrics.heightPixels)
+                .setRequestedFps(24.0f);
+
+        // use auto focus, and no flash options
+        builder = builder.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
+        mCameraSource = builder
+                .setFlashMode(null) // use Camera.Parameters.FLASH_MODE_TORCH if flash needed
+                .build();
     }
 
     @Override
@@ -89,89 +127,14 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
         }
     }
 
-    // Handles the requesting of the camera permission.
-    private void requestCameraPermission() {
-        Timber.w(getString(R.string.warning_error_getting_permission));
-
-        final String[] permissions = new String[]{Manifest.permission.CAMERA};
-
-        if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
-                Manifest.permission.CAMERA)) {
-            ActivityCompat.requestPermissions(this, permissions, Constants.CAMERA_REQUEST_CODE);
-        }
-    }
-
-    /**
-     * Creates and starts the camera.
-     *
-     * Suppressing InlinedApi since there is a check that the minimum version is met before using
-     * the constant.
-     */
-    @SuppressLint("InlinedApi")
-    private void createCameraSource(boolean autoFocus, boolean useFlash) {
-        Context context = getApplicationContext();
-
-        // A barcode detector is created to track barcodes.  An associated multi-processor instance
-        // is set to receive the barcode detection results, track the barcodes, and maintain
-        // graphics for each barcode on screen.  The factory is used by the multi-processor to
-        // create a separate tracker instance for each barcode.
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context)
-                .setBarcodeFormats(Barcode.ALL_FORMATS)
-                .build();
-        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(this);
-        barcodeDetector.setProcessor(new MultiProcessor.Builder<>(barcodeFactory).build());
-
-        if (!barcodeDetector.isOperational()) {
-            // Note: The first time that an app using the barcode or face API is installed on a
-            // device, GMS will download a native libraries to the device in order to do detection.
-            // Usually this completes before the app is run for the first time.  But if that
-            // download has not yet completed, then the above call will not detect any barcodes
-            // and/or faces.
-            //
-            // isOperational() can be used to check if the required native libraries are currently
-            // available.  The detectors will automatically become operational once the library
-            // downloads complete on device.
-            Timber.w(getString(R.string.warning_camera_detector_dependencies));
-
-            // Check for low storage.  If there is low storage, the native library will not be
-            // downloaded, so detection will not become operational.
-            IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
-            boolean hasLowStorage = registerReceiver(null, lowstorageFilter) != null;
-
-            if (hasLowStorage) {
-                Toast.makeText(this, R.string.low_storage_error, Toast.LENGTH_LONG).show();
-                Timber.w(getString(R.string.low_storage_error));
-            }
-        }
-
-        // Creates and starts the camera.  Note that this uses a higher resolution in comparison
-        // to other detection examples to enable the barcode detector to detect small barcodes
-        // at long distances.
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
-        CameraSource.Builder builder = new CameraSource.Builder(getApplicationContext(), barcodeDetector)
-                .setFacing(CameraSource.CAMERA_FACING_BACK)
-                .setRequestedPreviewSize(metrics.widthPixels, metrics.heightPixels)
-                .setRequestedFps(24.0f);
-
-        // make sure that auto focus is an available option
-
-        builder = builder.setFocusMode(autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
-
-        mCameraSource = builder
-                .setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null)
-                .build();
-    }
-
-    // Restarts the camera
+    // Restarts the camera when activity resumes
     @Override
     protected void onResume() {
         super.onResume();
         startCameraSource();
     }
 
-    // Stops the camera
+    // Stops the camera when activity is paused
     @Override
     protected void onPause() {
         super.onPause();
@@ -181,8 +144,7 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
     }
 
     /**
-     * Releases the resources associated with the camera source, the associated detectors, and the
-     * rest of the processing pipeline.
+     * Releases the resources associated with camera source
      */
     @Override
     protected void onDestroy() {
@@ -193,25 +155,15 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
     }
 
     /**
-     * Callback for the result from requesting permissions. This method
-     * is invoked for every call on {@link #requestPermissions(String[], int)}.
-     * <p>
-     * <strong>Note:</strong> It is possible that the permissions request interaction
-     * with the user is interrupted. In this case you will receive empty permissions
-     * and results arrays which should be treated as a cancellation.
-     * </p>
+     * Callback for the result from requesting permissions
      *
-     * @param requestCode  The request code passed in {@link #requestPermissions(String[], int)}.
-     * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions
-     *                     which is either {@link PackageManager#PERMISSION_GRANTED}
-     *                     or {@link PackageManager#PERMISSION_DENIED}. Never null.
-     * @see #requestPermissions(String[], int)
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-            @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // Bail out early if the permission requested is not for camera
         if (requestCode != Constants.CAMERA_REQUEST_CODE) {
             Timber.d(getString(R.string.info_camera_unexpected_permission));
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -219,16 +171,12 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
         }
 
         if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Timber.d(getString(R.string.info_camera_permission_granted));
-            // we have permission, so create the camerasource
-            boolean autoFocus = true;
-            boolean useFlash = false;
-            createCameraSource(autoFocus, useFlash);
+            // right permission requested, so create the camerasource
+            createCameraSource();
             return;
         }
 
-        Timber.e(getString(R.string.error_camera_no_permission));
-
+        // If however right permission is not granted then display dialog to request permission
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 finish();
@@ -243,18 +191,15 @@ public class BarcodeCaptureActivity extends AppCompatActivity implements Barcode
     }
 
     /**
-     * Starts or restarts the camera source, if it exists.  If the camera source doesn't exist yet
-     * (e.g., because onResume was called before the camera source was created), this will be called
-     * again when the camera source is created.
+     * Starts or restarts the camera source, if it exists
      */
     private void startCameraSource() throws SecurityException {
-        // check that the device has play services available.
-        int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(
-                getApplicationContext());
+        // check that the device has play services available
+        int code = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getApplicationContext());
         if (code != ConnectionResult.SUCCESS) {
-            Dialog dlg =
+            Dialog dialog =
                     GoogleApiAvailability.getInstance().getErrorDialog(this, code, Constants.GMS_REQUEST_CODE);
-            dlg.show();
+            dialog.show();
         }
 
         if (mCameraSource != null) {

@@ -32,8 +32,6 @@ public class TaskContract {
      */
     public static final String PATH_URI = "tasks";
 
-    public static final long INVALID_TASK_ID = -1;
-
     /**
      * Inner class that defines constant values for the Tasks table.
      * Each entry in the table represents a single task.
@@ -93,7 +91,7 @@ public class TaskContract {
                 + ", " + COLUMN_DUE_TIME + ", " + COLUMN_TAG_REPEAT + ", " + COLUMN_REPEAT_FREQUENCY
                 + ", " + COLUMN_TAG_COMPLETED + ", " + COLUMN_DATE_COMPLETED + ", " + COLUMN_DATE_ADDED
                 + ", " + COLUMN_DATE_UPDATED
-                + ", CASE WHEN " + COLUMN_DUE_DATE + " = '' THEN 1 "
+                + ", CASE WHEN (" + COLUMN_DUE_DATE + " = '' OR " + COLUMN_DUE_DATE + " IS NULL) THEN 1 "
                 + "WHEN " + COLUMN_DUE_DATE + " != '' THEN 2 END " + RES_COLUMN_TAG_DUE_DATE;
 
         // Projection for Counts displayed in Dashboard
@@ -111,7 +109,7 @@ public class TaskContract {
                 + COLUMN_DUE_DATE + " <= '" + Utils.getDateWeek() + "') THEN 1 ELSE 0 END)"
                 + " AS " + RES_COLUMN_COUNT_TASKS_WEEK + ","
 
-                + " SUM(CASE WHEN " + COLUMN_DUE_DATE + " = '' THEN 1 ELSE 0 END)"
+                + " SUM(CASE WHEN (" + COLUMN_DUE_DATE + " = '' OR " + COLUMN_DUE_DATE + " IS NULL) THEN 1 ELSE 0 END)"
                 + " AS " + RES_COLUMN_COUNT_TASKS_NODATE + " ";
 
 
@@ -122,7 +120,6 @@ public class TaskContract {
         // Possible values for Task Repeat Tag
         public static final int TAG_REPEAT = 1;
         public static final int TAG_NOT_REPEAT = 0;
-
     }
 
 }

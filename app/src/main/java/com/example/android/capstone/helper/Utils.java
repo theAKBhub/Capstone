@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.example.android.capstone.R;
 import com.example.android.capstone.data.Task;
 import com.example.android.capstone.data.TaskContract.TaskEntry;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,22 +85,21 @@ public class Utils {
      * Methods to set and get dates for Today, Tomorrow and Date after 7 days
      */
     public static void setDates() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
         Calendar calendar = Calendar.getInstance();
-        sDateToday = dateFormat.format(calendar.getTime());
+        sDateToday = inputFormatter.format(calendar.getTime());
 
         // add one day to the calendar date
         calendar.add(Calendar.DAY_OF_YEAR, 1);
-        sDateTomorrow = dateFormat.format(calendar.getTime());
+        sDateTomorrow = inputFormatter.format(calendar.getTime());
 
         // add 7 days to the calendar date
         calendar.add(Calendar.DAY_OF_YEAR, 7);
-        sDateWeek = dateFormat.format(calendar.getTime());
+        sDateWeek = inputFormatter.format(calendar.getTime());
 
         // add 30 days to the calendar date
         calendar.add(Calendar.DAY_OF_YEAR, 30);
-        sDateMonth = dateFormat.format(calendar.getTime());
+        sDateMonth = inputFormatter.format(calendar.getTime());
     }
 
     public static String getDateToday() {
@@ -116,10 +114,6 @@ public class Utils {
         return sDateWeek;
     }
 
-    public static String getDateMonth() {
-        return sDateMonth;
-    }
-
     public static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -129,6 +123,7 @@ public class Utils {
 
     /**
      * Method to format date for EditActivity and DetailActivity
+     *
      * @return formatted date
      */
     public static String getDisplayDate(String dateText) {
@@ -147,6 +142,7 @@ public class Utils {
 
     /**
      * Method to format date for ListActivity and Widget
+     *
      * @return formatted date
      */
     public static String getDisplayListDate(String dateText) {
@@ -169,7 +165,7 @@ public class Utils {
 
     /**
      * Method to return the Task Category options for Spinner
-     * @param context
+     *
      * @return List<String> of categories
      */
     public static List<String> getTaskCategories(Context context) {
@@ -191,23 +187,23 @@ public class Utils {
 
     /**
      * Method to return the Task Priority options for Spinner
-     * @param context
+     *
      * @return List<String> of priority
      */
     public static List<String> getTaskPriorities(Context context) {
         List<String> priorities = new ArrayList<>();
 
         priorities.add(context.getString(R.string.hint_spinner_priority));
-        priorities.add(Constants.TASK_PRIORITY_LOW);
-        priorities.add(Constants.TASK_PRIORITY_MEDIUM);
         priorities.add(Constants.TASK_PRIORITY_HIGH);
+        priorities.add(Constants.TASK_PRIORITY_MEDIUM);
+        priorities.add(Constants.TASK_PRIORITY_LOW);
 
         return priorities;
     }
 
     /**
      * Method to return the Task Repeat options for Spinner
-     * @param context
+     *
      * @return List<String> of priority
      */
     public static List<String> getRepeatOptions(Context context) {
@@ -223,7 +219,7 @@ public class Utils {
 
     /**
      * Method to return the Extra Info options for Spinner
-     * @param context
+     *
      * @return List<String> of extra info types
      */
     public static List<String> getExtraInfoOptions(Context context) {
@@ -241,7 +237,7 @@ public class Utils {
     /**
      * Method to create and populate a Task object from the cursor data
      * This task parcelable object will be used to pass between activities
-     * @param cursor
+     *
      * @return {@link Task} object
      */
     public static Task getTaskObject(Cursor cursor) {
@@ -282,17 +278,17 @@ public class Utils {
 
     /**
      * Method to return priority display text based on integer value
-     * @param priority
+     *
      * @return priority text
      */
     public static String getPriorityText(int priority) {
         switch (priority) {
             case 1:
-                return Constants.TASK_PRIORITY_LOW;
+                return Constants.TASK_PRIORITY_HIGH;
             case 2:
                 return Constants.TASK_PRIORITY_MEDIUM;
             case 3:
-                return Constants.TASK_PRIORITY_HIGH;
+                return Constants.TASK_PRIORITY_LOW;
         }
 
         return Constants.LABEL_NONE;
@@ -352,7 +348,7 @@ public class Utils {
 
     /**
      * Method to return index of repeat selection
-     * @param repeat
+     *
      * @return index
      */
     public static int getRepeatIndex(String repeat) {
@@ -367,5 +363,23 @@ public class Utils {
         }
 
         return 0;
+    }
+
+    /**
+     * Method to convert long value of time to display value
+     * @param timeLong
+     * @return formatted time value
+     */
+    public static String getDisplayTime(long timeLong) {
+        String timeText = "";
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeLong);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        timeText = String.format(Locale.ENGLISH, "%02d:%02d", hour, minute);
+        return timeText;
     }
 }

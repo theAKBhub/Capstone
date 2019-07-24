@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ===============================================================
+        Styles defined for Individual Items in Detail / Edit Screens
+     =================================================================== -->
+
+    <style name="DetailTaskTitle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
+    </style>
+
+    <style name="DetailTaskCategory">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/textsize_large</item>
+    </style>
+
+    <style name="DetailHeadings">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
+    </style>
+
+    <style name="DetailText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_4dp</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/textsize_medium</item>
+    </style>
+
+    <style name="EditErrorMessage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/dimen_16dp</item>
+        <item name="android:background">@color/colorErrorView</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="EditTaskInput">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:maxLength">@integer/task_title_maxlength</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
+    </style>
+
+    <style name="EditLabelOptional">
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_32dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
+    </style>
+
+    <style name="EditSpinnerFrame">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginStart">@dimen/activity_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:background">@drawable/shape_rectangle_outline</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="EditDateTimeButton">
+        <item name="android:layout_width">@dimen/dimen_48dp</item>
+        <item name="android:layout_height">@dimen/dimen_48dp</item>
+        <item name="android:layout_marginTop">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginStart">@dimen/activity_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="EditDateTime">
+        <item name="android:layout_width">@dimen/dimen_144dp</item>
+        <item name="android:layout_height">@dimen/dimen_48dp</item>
+        <item name="android:layout_marginTop">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
+    </style>
+
+    <style name="EditExtraText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin</item>
+        <item name="android:padding">@dimen/dimen_16dp</item>
+        <item name="android:background">@color/colorGrayLight</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">@dimen/textsize_small</item>
+    </style>
+
+    <style name="ExtraInfoAlert">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_8dp</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_16dp</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin</item>
+        <item name="android:padding">@dimen/dimen_16dp</item>
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:textSize">@dimen/textsize_xsmall</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="EditExtraSpinnerFrame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_32dp</item>
+        <item name="android:layout_marginStart">@dimen/activity_margin</item>
+        <item name="android:layout_marginEnd">@dimen/activity_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_margin</item>
+        <item name="android:background">@drawable/shape_rectangle_outline</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+</resources>

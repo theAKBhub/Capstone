@@ -6,6 +6,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -20,11 +21,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +41,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.capstone.R;
 import com.example.android.capstone.adapter.TaskCursorAdapter;
-import com.example.android.capstone.alarm.AlarmNotificationService;
 import com.example.android.capstone.alarm.AlarmSoundService;
 import com.example.android.capstone.data.Task;
 import com.example.android.capstone.data.TaskContract;
@@ -62,7 +62,12 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
         TaskCursorAdapter.CheckClickListener {
 
     private static final String STATE_TASK_FILTER = "state_task_filter";
+    private static final String SORT_ORDER_ASC = " ASC";
+    private static final String SORT_ORDER_DESC = " DESC";
     private static final int TASK_LIST_LOADER_ID = 1;
+    private static final int DAY_COUNTER_1 = 1;
+    private static final int DAY_COUNTER_7 = 7;
+    private static final int DAY_COUNTER_30 = 30;
 
     final Context mContext = this;
     private int mTaskFilterIndex;
@@ -71,6 +76,7 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
     private Task mTask;
     private Cursor mCursor;
     private Toast mToast;
+    private String mSortOrder;
 
     @BindView(R.id.clayout_tasklist)
     CoordinatorLayout mClayoutTasklist;
@@ -184,10 +190,10 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
         Intent intent = getIntent();
         if (intent.getExtras() != null) {
             mTaskFilterIndex = intent.getExtras().getInt(Constants.INTENT_KEY_TASK_FILTER);
-            if (intent.hasExtra("action")) {
-                String action = getIntent().getStringExtra("action");
-                Log.d("XXX", action);
-                if (action.equals("dismiss")) {
+            if (intent.hasExtra(Constants.INTENT_KEY_ALARM_ACTION)) {
+                String action = getIntent().getStringExtra(Constants.INTENT_KEY_ALARM_ACTION);
+
+                if (action.equals(Constants.ALARM_ACTION_DISMISS)) {
                     stopAlarm();
                 }
             }
@@ -246,6 +252,10 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    /**
+     * Prepare selection clause for query depending on the filter chosen
+     * @return selection clause
+     */
     private String getQuerySelectionClause() {
 
         String selectionClause = "(((" + TaskEntry.COLUMN_TAG_COMPLETED + " = 0" +
@@ -277,7 +287,8 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
 
             case 5:
                 // select tasks with no due date
-                selectionClause += " AND " + TaskEntry.COLUMN_DUE_DATE + " = ''))";
+                selectionClause +=
+                        " AND " + TaskEntry.COLUMN_DUE_DATE + " = '' OR " + TaskEntry.COLUMN_DUE_DATE + " IS NULL))";
                 break;
 
             case 0:
@@ -301,6 +312,33 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public Loader<Cursor> onCreateLoader(int id, @Nullable Bundle args) {
 
+        String querySortOder = null;
+
+        // Get preference values
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String orderBy = sharedPrefs.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
+        // Prepare sorting order
+        if (orderBy.equals(getString(R.string.settings_order_by_duedate_value))) { // Order by Due Date ASC
+            mSortOrder = TaskEntry.RES_COLUMN_TAG_DUE_DATE + SORT_ORDER_DESC + ", " + TaskEntry.COLUMN_DUE_DATE
+                    + SORT_ORDER_ASC;
+
+        } else if (orderBy.equals(getString(R.string.settings_order_by_newest_value))) { // Order by ID DESC
+            mSortOrder = TaskEntry._ID + SORT_ORDER_DESC;
+
+        } else if (orderBy.equals(getString(R.string.settings_order_by_priority_value))) {
+            // Order by Priority ASC (1 - High, 2 - Low, 3 - Priority, 0 - None)
+            // using CASE-WHEN as SQLite sorts integer column by default as 0, 1, 2, 3
+            mSortOrder = "case " + TaskEntry.COLUMN_PRIORITY + " when 0 then 2 else 1 end," + TaskEntry.COLUMN_PRIORITY
+                    + SORT_ORDER_ASC;
+        }
+
+        //--------------------------
+        // Start AsyncTaskLoader
+        //--------------------------
         return new AsyncTaskLoader<Cursor>(this) {
 
             // cursor that will hold all the task data
@@ -324,7 +362,7 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
                             new String[]{TaskEntry.PROJECTION_TASKS_LIST},
                             getQuerySelectionClause(),
                             null,
-                            TaskEntry.RES_COLUMN_TAG_DUE_DATE + " DESC, " + TaskEntry.COLUMN_DUE_DATE
+                            mSortOrder
                     );
 
                 } catch (Exception e) {
@@ -371,7 +409,6 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
 
     /**
      * Method to delete a task when the item has been swiped LEFT or RIGHT
-     * @param id
      */
     private void deleteTask(long id) {
         // build URI with String row id appended
@@ -416,7 +453,6 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
 
     /**
      * Interface method to handle task complete check onClick
-     * @param itemId
      */
     @Override
     public void onCheckClickListener(int itemId) {
@@ -481,17 +517,18 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
         }
 
         if (Constants.TASK_REPEAT_DAILY.equals(repeatFrequency)) {
-            dateDueNew = formatter.format(Utils.addDays(date, 1));
+            dateDueNew = formatter.format(Utils.addDays(date, DAY_COUNTER_1));
         } else if (Constants.TASK_REPEAT_WEEKLY.equals(repeatFrequency)) {
-            dateDueNew = formatter.format(Utils.addDays(date, 7));
+            dateDueNew = formatter.format(Utils.addDays(date, DAY_COUNTER_7));
         } else if (Constants.TASK_REPEAT_MONTHLY.equals(repeatFrequency)) {
-            dateDueNew = formatter.format(Utils.addDays(date, 30));
+            dateDueNew = formatter.format(Utils.addDays(date, DAY_COUNTER_30));
         }
 
         values.put(TaskEntry.COLUMN_TASK_TITLE, mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_TASK_TITLE)));
         values.put(TaskEntry.COLUMN_CATEGORY, mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_CATEGORY)));
         values.put(TaskEntry.COLUMN_PRIORITY, mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_PRIORITY)));
-        values.put(TaskEntry.COLUMN_EXTRA_INFO_TYPE, mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO_TYPE)));
+        values.put(TaskEntry.COLUMN_EXTRA_INFO_TYPE,
+                mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO_TYPE)));
         values.put(TaskEntry.COLUMN_EXTRA_INFO, mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO)));
         values.put(TaskEntry.COLUMN_DUE_DATE, dateDueNew);
         values.put(TaskEntry.COLUMN_DUE_TIME, mCursor.getString(mCursor.getColumnIndex(TaskEntry.COLUMN_DUE_TIME)));
@@ -513,7 +550,7 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
 
     /**
      * Method to inflate menu and add items to the action bar
-     * @param menu
+     *
      * @return boolean flag
      */
     @Override
@@ -524,12 +561,11 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
 
     /**
      * Method to handle action bar item clicks
-     * @param item
+     *
      * @return boolean flag
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
         switch (item.getItemId()) {
             case R.id.action_settings:
@@ -552,9 +588,9 @@ public class TaskListActivity extends AppCompatActivity implements AdapterView.O
         stopService(new Intent(this, AlarmSoundService.class));
 
         // remove the notification from notification tray
-        NotificationManager nm = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
-        nm.cancel(AlarmNotificationService.NOTIFICATION_ID);
+        NotificationManager notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancel(Constants.ALARM_NOTIFICATION_ID);
 
-        Toast.makeText(this, "Alarm stopped by User.", Toast.LENGTH_SHORT).show();
+        Utils.showToastMessage(this, mToast, getString(R.string.msg_alarm_stopped)).show();
     }
 }

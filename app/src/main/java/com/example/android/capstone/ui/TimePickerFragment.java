@@ -9,6 +9,9 @@ import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import java.util.Calendar;
 
+/**
+ * Fragment to show the TimePicker dialog
+ */
 public class TimePickerFragment extends DialogFragment {
 
     private Context mContext;

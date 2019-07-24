@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8dp">
+
+        <TextView
+            android:id="@+id/textview_task_category"
+            style="@style/ListItemTaskDetails"
+            app:fontFamily="@font/noto_sans"
+            tools:text="@string/default_task_category"/>
+
+        <TextView
+            android:id="@+id/textview_repeat"
+            style="@style/ListItemTaskDetails"
+            app:fontFamily="@font/noto_sans"
+            android:layout_marginStart="@dimen/dimen_8dp"
+            android:layout_marginLeft="@dimen/dimen_8dp"
+            android:layout_toEndOf="@id/textview_task_category"
+            android:layout_toRightOf="@id/textview_task_category"
+            tools:text="@string/default_repeat"/>
+
+        <ImageView
+            android:id="@+id/imageview_repeat"
+            style="@style/ListItemRepeatImage"
+            android:contentDescription="@string/default_repeat"
+            app:srcCompat="@drawable/ic_repeat"/>
+    </RelativeLayout>
+</merge>

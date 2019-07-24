@@ -10,14 +10,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindColor;
 import butterknife.BindDrawable;
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.android.capstone.R;
 import com.example.android.capstone.data.TaskContract.TaskEntry;
 import com.example.android.capstone.helper.Utils;
+import java.util.Locale;
 
 /**
  * CursorAdapter class that is used to display relevant Task details in the RecyclerView
@@ -90,18 +93,20 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
         holder.textviewTaskTitle.setText(taskTitle);
         if (tagRepeat == 0) {
             holder.textviewTaskCategory.setText(taskCategory);
-            holder.textviewTaskCategory.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            holder.imageviewRepeat.setVisibility(View.INVISIBLE);
         } else {
-            String details = taskCategory + " | " + repeat;
-            holder.textviewTaskCategory.setText(details);
-            holder.textviewTaskCategory.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_repeat, 0);
-            holder.textviewTaskCategory.setCompoundDrawablePadding(8);
+            String repeatText = " | " + repeat;
+            holder.textviewTaskCategory.setText(taskCategory);
+            holder.textviewRepeat.setText(repeatText);
+            holder.imageviewRepeat.setVisibility(View.VISIBLE);
         }
 
-        holder.textviewDueDate.setText(Utils.getDisplayListDate(dueDate));
+        if (!Utils.isEmptyString(dueDate)) {
+            holder.textviewDueDate.setText(Utils.getDisplayListDate(dueDate));
+        }
 
         if (!Utils.isEmptyString(dueTime)) {
-            holder.textviewDueTime.setText(dueTime);
+            holder.textviewDueTime.setText(String.format(Locale.ENGLISH, holder.dispTime, dueTime));
         }
 
         Drawable resourceId;
@@ -168,6 +173,10 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
         TextView textviewTaskTitle;
         @BindView(R.id.textview_task_category)
         TextView textviewTaskCategory;
+        @BindView(R.id.textview_repeat)
+        TextView textviewRepeat;
+        @BindView(R.id.imageview_repeat)
+        ImageView imageviewRepeat;
         @BindView(R.id.textview_task_date)
         TextView textviewDueDate;
         @BindView(R.id.textview_task_time)
@@ -185,6 +194,8 @@ public class TaskCursorAdapter extends RecyclerView.Adapter<TaskCursorAdapter.Ta
         int colorGreen;
         @BindColor(R.color.colorWhite)
         int colorWhite;
+        @BindString(R.string.list_time_disp)
+        String dispTime;
 
         @BindDrawable(R.drawable.ic_square)
         Drawable squareEmpty;

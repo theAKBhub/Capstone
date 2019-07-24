@@ -1,9 +1,7 @@
 package com.example.android.capstone.data;
 
-import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.example.android.capstone.data.TaskContract.TaskEntry;
 
 /**
  * A {@link Task} object that contains details related to a single Task item
@@ -191,31 +189,5 @@ public class Task implements Parcelable {
 
     public void setDateCompleted(String dateCompleted) {
         mDateCompleted = dateCompleted;
-    }
-
-    /**
-     * Method to create and populate a Task object from the cursor data
-     * This task parcelable object will be used to pass between activities
-     * @param cursor
-     * @return {@link Task} object
-     */
-    public Task getTaskObject(Cursor cursor) {
-        Task task = new Task();
-
-        task.setTaskId(cursor.getLong(cursor.getColumnIndex(TaskEntry._ID)));
-        task.setTaskTitle(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_TASK_TITLE)));
-        task.setCategory(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_CATEGORY)));
-        task.setPriority(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_PRIORITY)));
-        task.setExtraInfoType(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO_TYPE)));
-        task.setExtraInfo(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_EXTRA_INFO)));
-        task.setDueDate(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DUE_DATE)));
-        task.setDueTime(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DUE_TIME)));
-        task.setTagRepeat(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TAG_REPEAT)));
-        task.setRepeatFrequency(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_REPEAT_FREQUENCY)));
-        task.setTagCompleted(cursor.getInt(cursor.getColumnIndex(TaskEntry.COLUMN_TAG_COMPLETED)));
-        task.setDateAdded(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DATE_ADDED)));
-        task.setDateCompleted(cursor.getString(cursor.getColumnIndex(TaskEntry.COLUMN_DATE_COMPLETED)));
-
-        return task;
     }
 }

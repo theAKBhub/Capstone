@@ -6,20 +6,14 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
  * BroadcastReceiver class that invokes Alarm Manager
  */
-
 public class AlarmReceiver extends BroadcastReceiver {
-
-    private static final String TAG = AlarmReceiver.class.getSimpleName();
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Alarm has been triggered");
 
         // Start sound service to play sound for alarm
         context.startService(new Intent(context, AlarmSoundService.class));

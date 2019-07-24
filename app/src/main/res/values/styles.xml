@@ -42,7 +42,6 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-
     <!-- Custom Preference Theme inherits from the v14 support library Material Theme -->
     <style name="AppPreferenceTheme" parent="@style/PreferenceThemeOverlay.v14.Material">
         <item name="preferenceFragmentCompatStyle">@style/AppPreferenceFragmentCompatStyle</item>
@@ -58,7 +57,6 @@
         <!-- To tint the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
 
     <!-- Style for an Preference Entry -->
     <style name="AppPreference">

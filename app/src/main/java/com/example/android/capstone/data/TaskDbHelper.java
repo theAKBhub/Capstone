@@ -70,10 +70,10 @@ public class TaskDbHelper extends SQLiteOpenHelper {
         Timber.d(mContext.getString(R.string.info_db_upgrade), oldVersion, newVersion);
         switch (newVersion) {
             case 2:
-                // SQL to execute
+                // SQL to execute when DB version 2 is to be installed
                 break;
             case 3:
-                // SQL to execute
+                // SQL to execute when DB version 3 is to be installed
                 break;
         }
     }

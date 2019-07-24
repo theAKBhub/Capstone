@@ -30,7 +30,7 @@ public class WidgetIntentService extends IntentService {
         context.startService(intent);
     }
 
-     @Override
+    @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();

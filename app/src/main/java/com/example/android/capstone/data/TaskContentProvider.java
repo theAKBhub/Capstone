@@ -28,10 +28,6 @@ public class TaskContentProvider extends ContentProvider {
     // URI matcher code for the content URI for a single item in the table
     private static final int TASK_ID = 101;
 
-    //******************
-    private static final int TASKS_UNION = 102;
-
-
     // Database Helper Object
     private TaskDbHelper mDbHelper;
 
@@ -322,7 +318,8 @@ public class TaskContentProvider extends ContentProvider {
                 // check if Extra Info is available if Extra Info Type exists
                 extraInfoType = values.getAsString(TaskEntry.COLUMN_EXTRA_INFO_TYPE);
                 extraInfo = values.getAsString(TaskEntry.COLUMN_EXTRA_INFO);
-                if (!extraInfoType.equals(mContext.getString(R.string.hint_spinner_extrainfo)) && (Utils.isEmptyString(extraInfo))) {
+                if (!extraInfoType.equals(mContext.getString(R.string.hint_spinner_extrainfo)) && (Utils
+                        .isEmptyString(extraInfo))) {
                     throw new IllegalArgumentException(mContext.getString(R.string.error_missing_extra_info));
                 }
 

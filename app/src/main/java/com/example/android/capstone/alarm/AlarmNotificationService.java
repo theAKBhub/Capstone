@@ -12,15 +12,13 @@ import com.example.android.capstone.R;
 import com.example.android.capstone.helper.Constants;
 import com.example.android.capstone.ui.TaskListActivity;
 
+/**
+ * This IntentService class is used to handle alarm notifications
+ */
 public class AlarmNotificationService extends IntentService {
 
     private NotificationManager mAlarmNotificationManager;
-
-    // Notification ID for Alarm
-    public static final int NOTIFICATION_ID = 1;
-
     private final static String NOTIFICATION_CHANNEL_ID = "task_notification_channel";
-
 
     public AlarmNotificationService() {
         super("AlarmNotificationService");
@@ -29,7 +27,7 @@ public class AlarmNotificationService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         // Send notification
-        sendNotification("Time to wake up");
+        sendNotification(getString(R.string.label_alarm_title));
     }
 
     /**
@@ -45,47 +43,40 @@ public class AlarmNotificationService extends IntentService {
 
         // stop alarm from notification
         Intent stopIntent = new Intent(this, TaskListActivity.class);
-        stopIntent.putExtra("action", "dismiss");
+        stopIntent.putExtra(Constants.INTENT_KEY_ALARM_ACTION, Constants.ALARM_ACTION_DISMISS);
         stopIntent.putExtra(Constants.INTENT_KEY_TASK_FILTER, 0);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-
-
-        // Create notification
+        // create notification
         NotificationCompat.Builder alamNotificationBuilder =
                 new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_alarm)
                         .setContentTitle(message)
-                        .setContentText("Much longer text that cannot fit one line...")
+                        .setContentText(getString(R.string.label_alarm_message))
                         .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText("Much longer text that cannot fit one line..."))
+                                .bigText(getString(R.string.label_alarm_message)))
                         .setContentIntent(contentIntent)
                         .setAutoCancel(true)
-                        .addAction(R.mipmap.ic_launcher, "STOP", pendingIntent)
+                        .addAction(R.mipmap.ic_launcher, getString(R.string.action_stop), pendingIntent)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         // notiy notification manager about new notification
-        mAlarmNotificationManager.notify(NOTIFICATION_ID, alamNotificationBuilder.build());
+        mAlarmNotificationManager.notify(Constants.ALARM_NOTIFICATION_ID, alamNotificationBuilder.build());
     }
 
     /**
-     * Before notification can be delivered on Android 8.0 and higher, the app's notification
-     * channel must be registered with the system by passing an instance of NotificationChannel to
-     * createNotificationChannel()
+     * Register app's notification channel using an instance of NotificationChannel to createNotificationChannel().
+     * This is specifically required for API >= 26
      */
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            CharSequence name = "Channel";
-            String description = "Notification Channel Description";
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, name, importance);
-            channel.setDescription(description);
 
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
+                    getString(R.string.notification_channel_name), importance);
+            channel.setDescription(getString(R.string.notifiation_channel_desc));
+
+            // register the channel
             if (mAlarmNotificationManager != null) {
                 mAlarmNotificationManager.createNotificationChannel(channel);
             }

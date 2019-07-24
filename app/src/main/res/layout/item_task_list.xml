@@ -14,29 +14,23 @@
         android:layout_height="@dimen/dimen_70dp"
         android:orientation="horizontal">
 
-
         <View
             android:id="@+id/view_priority"
             android:layout_width="@dimen/dimen_6dp"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dimen_16dp"
             android:layout_marginRight="@dimen/dimen_16dp"/>
 
         <ImageButton
             android:id="@+id/button_check"
-            android:layout_width="@dimen/dimen_24dp"
-            android:layout_height="@dimen/dimen_24dp"
-            android:layout_marginRight="@dimen/dimen_16dp"
-            android:layout_gravity="center"
-            android:background="@android:color/white"
+            style="@style/ListItemCheckImage"
             android:contentDescription="@string/default_check_task"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_square"/>
 
         <View
             android:layout_width="@dimen/dimen_1dp"
             android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/dimen_16dp"
             android:layout_marginRight="@dimen/dimen_16dp"
             android:background="@color/colorGrayLight"/>
 
@@ -49,20 +43,16 @@
 
             <TextView
                 android:id="@+id/textview_task_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textsize_small"
+                style="@style/ListItemTaskTitle"
+                app:fontFamily="@font/noto_sans"
                 tools:text="@string/default_task_title"/>
 
-            <TextView
-                android:id="@+id/textview_task_category"
+            <include
+                layout="@layout/include_task_list_details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/textsize_xsmall"
-                tools:text="@string/default_task_category"/>
+                android:layout_marginTop="@dimen/dimen_8dp"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -73,19 +63,15 @@
 
             <TextView
                 android:id="@+id/textview_task_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/textsize_xsmall"
+                style="@style/ListItemDateTime"
+                app:fontFamily="@font/noto_sans"
                 tools:text="@string/default_due_date"/>
 
             <TextView
                 android:id="@+id/textview_task_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/ListItemDateTime"
                 android:layout_marginTop="@dimen/dimen_8dp"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/textsize_xsmall"
+                app:fontFamily="@font/noto_sans"
                 tools:text="@string/default_due_time"/>
         </LinearLayout>
 

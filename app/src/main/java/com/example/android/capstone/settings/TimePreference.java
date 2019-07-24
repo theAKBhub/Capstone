@@ -10,17 +10,14 @@ public class TimePreference extends DialogPreference {
 
     private int mTime;
     private int mDialogLayoutResId = R.layout.pref_dialog_time;
-    //private long mTimeinMills;
 
-
+    /**
+     * Timepreference Constructors
+     */
     public TimePreference(Context context) {
         super(context);
     }
 
-    /**
-     * When you replace the 0 in the second constructor with R.attr.dialogPreferenceStyle (For a DialogPreference)
-     * or R.attr.preferenceStyle (For any other preference) you won’t face any design issues later.
-     */
     public TimePreference(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
     }
@@ -34,6 +31,9 @@ public class TimePreference extends DialogPreference {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+    /**
+     * Getter and Setter methods
+     */
     public int getTime() {
         return mTime;
     }
@@ -47,29 +47,27 @@ public class TimePreference extends DialogPreference {
 
     /**
      * Read default Pref value
-     * @param a
-     * @param index
-     * @return
+     *
+     * @return object
      */
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        // Default value from attribute. Fallback value is set to 0.
-        return a.getInt(index, 0);
+    protected Object onGetDefaultValue(TypedArray array, int index) {
+        // Default value from attribute.
+        return array.getInt(index, 0);
     }
 
     /**
      * Reads stored preference value
-     * @param restorePersistedValue
-     * @param defaultValue
      */
     @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        // Read the value. Use the default value if it is not possible.
         setTime(restorePersistedValue ? getPersistedInt(mTime) : (int) defaultValue);
     }
 
     /**
      * Set the layout resource for the dialog
+     *
+     * @return dialog resource Id
      */
     public int getDialogLayoutResource() {
         return mDialogLayoutResId;

@@ -19,6 +19,8 @@
     <dimen name="dimen_144dp">144dp</dimen>
     <dimen name="dimen_192dp">192dp</dimen>
 
+    <dimen name="activity_margin">@dimen/dimen_16dp</dimen>
+
     <!-- Specific Dimensions -->
     <dimen name="fab_elevation">@dimen/dimen_6dp</dimen>
     <dimen name="fab_press_translation_z">12dp</dimen>
@@ -32,6 +34,7 @@
     <dimen name="textsize_big">18sp</dimen>
     <dimen name="textsize_large">24sp</dimen>
     <dimen name="textsize_xlarge">34sp</dimen>
+    <dimen name="textsize_xxlarge">48sp</dimen>
 
     <item format="integer" name="grid_cols" type="integer">2</item>
     <item format="integer" name="task_title_maxlength" type="integer">50</item>

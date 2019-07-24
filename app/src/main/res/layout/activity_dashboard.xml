@@ -46,13 +46,4 @@
             android:layout_gravity="center"/>
 
     </FrameLayout>
-
-    <!-- //////////////////////////////////////////// -->
-    <!--<Button-->
-        <!--android:id="@+id/btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:text="button"/>-->
-
 </android.support.design.widget.CoordinatorLayout>

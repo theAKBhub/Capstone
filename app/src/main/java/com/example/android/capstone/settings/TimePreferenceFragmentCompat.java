@@ -10,20 +10,21 @@ import android.os.Bundle;
 import android.support.v7.preference.DialogPreference;
 import android.support.v7.preference.PreferenceDialogFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 import android.widget.Toast;
 import com.example.android.capstone.R;
 import com.example.android.capstone.alarm.AlarmReceiver;
+import com.example.android.capstone.helper.Utils;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class TimePreferenceFragmentCompat extends PreferenceDialogFragmentCompat {
 
     private TimePicker mTimePicker;
-    private int time1;
-    private long timeLong;
-
+    private int mTimeInt;
+    private long mTimeLong;
+    private Toast mToast;
 
     /**
      * This static method creates a new instance of our TimePreferenceFragmentCompat.
@@ -35,9 +36,9 @@ public class TimePreferenceFragmentCompat extends PreferenceDialogFragmentCompat
     public static TimePreferenceFragmentCompat newInstance(String key) {
         final TimePreferenceFragmentCompat
                 fragment = new TimePreferenceFragmentCompat();
-        final Bundle b = new Bundle(1);
-        b.putString(ARG_KEY, key);
-        fragment.setArguments(b);
+        final Bundle bundle = new Bundle(1);
+        bundle.putString(ARG_KEY, key);
+        fragment.setArguments(bundle);
 
         return fragment;
     }
@@ -54,7 +55,7 @@ public class TimePreferenceFragmentCompat extends PreferenceDialogFragmentCompat
 
         // Exception: There is no TimePicker with the id 'edit' in the dialog.
         if (mTimePicker == null) {
-            throw new IllegalStateException("Dialog view must contain a TimePicker with id 'edit'");
+            throw new IllegalStateException(getString(R.string.error_timepicker_edit_not_found));
         }
 
         // Get the time from the related Preference
@@ -63,17 +64,6 @@ public class TimePreferenceFragmentCompat extends PreferenceDialogFragmentCompat
         if (preference instanceof TimePreference) {
             minutesAfterMidnight = ((TimePreference) preference).getTime();
         }
-
-        // Set the time to the TimePicker
-        /*if (minutesAfterMidnight != null) {
-            int hours = minutesAfterMidnight / 60;
-            int minutes = minutesAfterMidnight % 60;
-            boolean is24hour = DateFormat.is24HourFormat(getContext());
-
-            mTimePicker.setIs24HourView(is24hour);
-            mTimePicker.setCurrentHour(hours);
-            mTimePicker.setCurrentMinute(minutes);
-        }*/
     }
 
     /**
@@ -97,27 +87,24 @@ public class TimePreferenceFragmentCompat extends PreferenceDialogFragmentCompat
 
             getTimeinMillsec();
 
-
-            // Generate value to save
+            // Generate value to set alarm
             int minutesAfterMidnight = (hours * 60) + minutes;
-            Log.d("XXX", "minutesAfterMidnight = " + minutesAfterMidnight);
 
-            // Save the value
             DialogPreference preference = getPreference();
             if (preference instanceof TimePreference) {
                 TimePreference timePreference = ((TimePreference) preference);
-                // This allows the client to ignore the user value.
-                if (timePreference.callChangeListener(minutesAfterMidnight)) {
-                    // Save the value
 
-                    //timePreference.setTime(minutesAfterMidnight);
-                    timePreference.setTime(time1);
-                    setAlarm(timeLong);
+                if (timePreference.callChangeListener(minutesAfterMidnight)) {
+                    timePreference.setTime(mTimeInt);
+                    setAlarm(mTimeLong);
                 }
             }
         }
     }
 
+    /**
+     * Method to get Time in milliseconds for setting the alarm
+     */
     public long getTimeinMillsec() {
         Calendar calendar = Calendar.getInstance();
         if (Build.VERSION.SDK_INT >= 23) {
@@ -136,31 +123,36 @@ public class TimePreferenceFragmentCompat extends PreferenceDialogFragmentCompat
                     mTimePicker.getCurrentMinute(), 0);
         }
 
-        Log.d("XXX", "Time in millsec = " + (int) calendar.getTimeInMillis());
+        mTimeLong = calendar.getTimeInMillis();
+        mTimeInt = (int) calendar.getTimeInMillis();
 
-        timeLong = calendar.getTimeInMillis();
-        time1 = (int) calendar.getTimeInMillis();
-
-        return timeLong;
-
+        return mTimeLong;
     }
 
+    /**
+     * Method to set the alarm
+     * @param time in milliseconds
+     */
     public void setAlarm(long time) {
 
         // Get preference values
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        boolean switchValue = sharedPrefs.getBoolean("pref_switch", false);
+        boolean switchValue = sharedPrefs.getBoolean(getString(R.string.settings_switch_key), false);
 
         if (switchValue) {
 
             Intent alarmIntent = new Intent(getContext(), AlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), 1, alarmIntent, 0);
             AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-            //alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
-            Toast.makeText(getContext(), "Alarm Set for " + time1 + " seconds", Toast.LENGTH_SHORT).show();
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, time, AlarmManager.INTERVAL_DAY, pendingIntent);
+
+            Utils.showToastMessage(getContext(),
+                    mToast,
+                    String.format(Locale.ENGLISH, getString(R.string.msg_alarm_set), Utils.getDisplayTime(mTimeLong)))
+                    .show();
         } else {
-            Toast.makeText(getContext(), "You need to switch on alarm switch", Toast.LENGTH_SHORT).show();
+            Utils.showToastMessage(getContext(),
+                    mToast, getString(R.string.msg_notification_off)).show();
         }
     }
 }

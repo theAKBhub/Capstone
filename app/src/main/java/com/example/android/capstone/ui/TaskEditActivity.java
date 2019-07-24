@@ -51,8 +51,11 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.vision.barcode.Barcode;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import timber.log.Timber;
 
@@ -67,6 +70,10 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
     private static final String STATE_EXTRA_INFO = "state_extra_info";
     private static final String STATE_EXTRA_INFO_TYPE = "state_extra_info_type";
     private static final String STATE_NEW_TASK = "state_new_task";
+    private static final String STATE_INPUT_ERROR = "state_input_error";
+    private static final String STATE_INPUT_ERROR_MSG = "state_input_error_msg";
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     final Context mContext = this;
     private Uri mCurrentUri;
@@ -124,6 +131,8 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
     String mErrorRepeatDueDate;
     @BindString(R.string.errormsg_missing_extra)
     String mErrorExtraInfo;
+    @BindString(R.string.errormsg_old_due_date)
+    String mErrorOldDueDate;
 
     /**
      * Variables to hold UI data
@@ -148,6 +157,8 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
     private boolean mIsRestoredInstance;
     private boolean mIsUserInteracting;
     private MediaPlayer mMediaPlayer;
+    private boolean mHasNoInputError;
+    private String mInputErrorMessage;
 
 
     // Boolean flag that keeps track of whether the product has been edited (true) or not (false)
@@ -179,6 +190,7 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
         if (savedInstanceState == null) {
             getIntentData();
             mIsRestoredInstance = false;
+            mHasNoInputError = true;
         } else {
             mIsRestoredInstance = true;
         }
@@ -233,6 +245,8 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
         outState.putString(STATE_EXTRA_INFO_TYPE, mExtraInfoType);
         outState.putString(STATE_EXTRA_INFO_DISP, mExtraInfoDisplay);
         outState.putBoolean(STATE_NEW_TASK, mIsNewTask);
+        outState.putBoolean(STATE_INPUT_ERROR, mHasNoInputError);
+        outState.putString(STATE_INPUT_ERROR_MSG, mInputErrorMessage);
     }
 
     @Override
@@ -245,10 +259,16 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
             mExtraInfoType = savedInstanceState.getString(STATE_EXTRA_INFO_TYPE);
             mExtraInfoDisplay = savedInstanceState.getString(STATE_EXTRA_INFO_DISP);
             mIsNewTask = savedInstanceState.getBoolean(STATE_NEW_TASK);
+            mHasNoInputError = savedInstanceState.getBoolean(STATE_INPUT_ERROR);
+            mInputErrorMessage = savedInstanceState.getString(STATE_INPUT_ERROR_MSG);
 
             displayDate();
             displayTime();
             displayExtraInfo();
+
+            if (!mHasNoInputError) {
+                showHideErrors(false, mInputErrorMessage);
+            }
         }
     }
 
@@ -841,6 +861,10 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
      * Method to show/hide error messages based on UI input validation
      */
     private void showHideErrors(boolean isInvalidData, String errorMessage) {
+
+        mHasNoInputError = isInvalidData;
+        mInputErrorMessage = errorMessage;
+
         if (isInvalidData) {
             mTextViewError.setText("");
             mTextViewError.setVisibility(View.GONE);
@@ -884,12 +908,31 @@ public class TaskEditActivity extends AppCompatActivity implements AdapterView.O
             return false;
         }
 
+        // Due Date - check if it is a past date
+        if (!Utils.isEmptyString(mDateDue)) {
+            Date today;
+            Date dueDate;
+
+            try {
+                today = dateFormat.parse(Utils.getDateToday());
+                dueDate = dateFormat.parse(mDateDue);
+                if (today.compareTo(dueDate) > 0) {
+                    showHideErrors(false, mErrorOldDueDate);
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         // Extra Info : this is not a required field
         // However, if extra info type is selected then check if details are there too
         if ((mExtraInfoTypeIndex > 0) && (Utils.isEmptyString(mExtraInfo))) {
             showHideErrors(false, mErrorExtraInfo);
             return false;
         }
+
+        mHasNoInputError = true;
 
         return true;
     }

@@ -34,20 +34,11 @@ public class WidgetCollectionProvider extends AppWidgetProvider {
         // Set an empty view in case of no data
         remoteViews.setEmptyView(R.id.listview_widget, R.id.textview_empty_widget);
 
-
-
-
         // click event handler for the title, launches Tasks List when the user clicks on title
         Intent titleIntent = new Intent(context, TaskListActivity.class);
         titleIntent.putExtra(Constants.INTENT_KEY_TASK_FILTER, 0);
         PendingIntent titlePendingIntent = PendingIntent.getActivity(context, 0, titleIntent, 0);
         remoteViews.setOnClickPendingIntent(R.id.textview_widget_header, titlePendingIntent);
-
-
-
-        //Intent intent = new Intent(context, WidgetRemoteService.class);
-        //remoteViews.setRemoteAdapter(R.id.listview_widget, intent);
-
 
         // click event handler for each list item on widget, launches Detail Activity with that Task
         Intent clickIntentTemplate = new Intent(context, TaskDetailActivity.class);
@@ -58,13 +49,11 @@ public class WidgetCollectionProvider extends AppWidgetProvider {
 
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.listview_widget);
-
     }
 
     /**
      * This method is called every 30 mins as specified on widgetinfo.xml, and also on device reboot
-     * @param context
-     * @param appWidgetManager
+     *
      * @param appWidgetIds - ids of multiple instances of the widget
      */
     @Override

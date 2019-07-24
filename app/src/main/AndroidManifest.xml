@@ -89,6 +89,7 @@
         <activity
             android:name=".ui.TaskEditActivity"
             android:parentActivityName=".ui.TaskListActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:windowSoftInputMode="stateHidden">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -116,6 +117,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts"/>
 
         <activity
             android:label="Barcode Reader"

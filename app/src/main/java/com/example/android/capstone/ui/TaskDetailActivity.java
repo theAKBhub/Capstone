@@ -18,7 +18,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,7 +32,7 @@ import com.example.android.capstone.helper.Constants;
 import com.example.android.capstone.helper.Utils;
 import java.util.ArrayList;
 
-public class TaskDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>  {
+public class TaskDetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final int TASK_LOADER_ID = 1;
     private static final String BASE_URL_SEARCH = "http://www.google.com/search?q=";
@@ -93,7 +92,7 @@ public class TaskDetailActivity extends AppCompatActivity implements LoaderManag
             if (intent.hasExtra(Constants.INTENT_KEY_TASK)) {
                 // activity opened from TaskListActivity so all task details retrieved via Parcelable object
                 ArrayList<Task> tasks = getIntent().getParcelableArrayListExtra(Constants.INTENT_KEY_TASK);
-                mTask = tasks.get(0); Log.d("XXX", "repeat = " + mTask.getRepeatFrequency());
+                mTask = tasks.get(0);
                 displayTaskDetails();
 
             } else if (intent.hasExtra(Constants.INTENT_KEY_TASK_ID)) {
@@ -186,7 +185,7 @@ public class TaskDetailActivity extends AppCompatActivity implements LoaderManag
             return;
         }
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             mTask = Utils.getTaskObject(cursor);
             displayTaskDetails();
         }
@@ -211,17 +210,19 @@ public class TaskDetailActivity extends AppCompatActivity implements LoaderManag
         mTextViewPriority.setText(Utils.getPriorityText(mTask.getPriority()));
 
         // due date
-        String date = Utils.isEmptyString(mTask.getDueDate()) ? "" : mTask.getDueDate();
+        String date = Utils.isEmptyString(mTask.getDueDate()) ? Constants.LABEL_NONE : mTask.getDueDate();
         mTextViewDate.setText(Utils.getDisplayDate(date));
 
         // due time
-        mTextViewTime.setText(Utils.isEmptyString(mTask.getDueTime()) ? "" : mTask.getDueTime());
+        mTextViewTime.setText(Utils.isEmptyString(mTask.getDueTime()) ? Constants.LABEL_NONE : mTask.getDueTime());
 
         // repeat frequency
         if (mTask.getTagRepeat() > 0) {
-            mTextViewRepeat.setText((Utils.isEmptyString(mTask.getRepeatFrequency()) ? "" : mTask.getRepeatFrequency()));
+            mTextViewRepeat
+                    .setText((Utils.isEmptyString(mTask.getRepeatFrequency()) ? Constants.LABEL_NONE
+                            : mTask.getRepeatFrequency()));
         } else {
-            mTextViewRepeat.setText("");
+            mTextViewRepeat.setText(Constants.LABEL_NONE);
         }
 
         // extra info
@@ -242,7 +243,7 @@ public class TaskDetailActivity extends AppCompatActivity implements LoaderManag
             }
             mTextViewExtra.setText(mTask.getExtraInfoType() + "\n\n" + extra);
         } else {
-            mTextViewExtra.setText("");
+            mTextViewExtra.setText(Constants.LABEL_NONE);
         }
 
         // show button if task has extra info, else it's hidden
@@ -317,5 +318,4 @@ public class TaskDetailActivity extends AppCompatActivity implements LoaderManag
             });
         }
     }
-
 }

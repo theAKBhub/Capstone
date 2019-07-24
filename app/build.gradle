@@ -1,6 +1,18 @@
 apply plugin: 'com.android.application'
 
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file("$rootDir/keystore.jks")
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.example.android.capstone"
@@ -15,6 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
@@ -42,17 +55,11 @@ dependencies {
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeLibraryVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeLibraryVersion"
 
-    // Material Drawer (https://github.com/mikepenz/MaterialDrawer)
-    implementation("com.mikepenz:materialdrawer:6.0.7@aar") {
-        transitive = true
-    }
-
     implementation "com.android.support:preference-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:preference-v14:$rootProject.supportLibraryVersion"
     implementation "com.google.android.gms:play-services-vision:$rootProject.gmsVision"
     implementation "com.google.android.gms:play-services-location:$rootProject.gmsLocation"
     implementation "com.google.android.gms:play-services-places:$rootProject.gmsLocation"
     implementation "com.google.android.gms:play-services-maps:$rootProject.gmsLocation"
-
     implementation 'com.takisoft.fix:preference-v7:27.1.1.1'
 }

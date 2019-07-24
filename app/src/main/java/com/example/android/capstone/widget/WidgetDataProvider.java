@@ -11,6 +11,7 @@ import android.widget.RemoteViewsService;
 import com.example.android.capstone.R;
 import com.example.android.capstone.data.TaskContract.TaskEntry;
 import com.example.android.capstone.helper.Constants;
+import com.example.android.capstone.helper.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,21 +42,25 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public void onDataSetChanged() {
         final long identityToken = Binder.clearCallingIdentity();
 
-        if (mCursor != null) mCursor.close();
+        if (mCursor != null) {
+            mCursor.close();
+        }
 
         // select only first 5 tasks order by DUE DATE in ascending order
         mCursor = mContext.getContentResolver().query(TaskEntry.CONTENT_URI,
                 new String[]{TaskEntry.PROJECTION_TASKS_LIST},
                 TaskEntry.COLUMN_DATE_COMPLETED + " LIKE ''",
                 null,
-                TaskEntry.RES_COLUMN_TAG_DUE_DATE + " DESC, " + TaskEntry.COLUMN_DUE_DATE + " ASC LIMIT 5" );
+                TaskEntry.RES_COLUMN_TAG_DUE_DATE + " DESC, " + TaskEntry.COLUMN_DUE_DATE + " ASC LIMIT 5");
 
         Binder.restoreCallingIdentity(identityToken);
     }
 
     @Override
     public void onDestroy() {
-        if (mCursor != null) mCursor.close();
+        if (mCursor != null) {
+            mCursor.close();
+        }
     }
 
     @Override
@@ -66,13 +71,15 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     /**
      * Method that populates all the RemoteViews associated with the widget.
      * Functions similar to onBindViewHolder method in an Adapter.
-     * @param position
+     *
      * @return remote view
      */
     @Override
     public RemoteViews getViewAt(int position) {
 
-        if (mCursor == null || mCursor.getCount() == 0) return null;
+        if (mCursor == null || mCursor.getCount() == 0) {
+            return null;
+        }
         mCursor.moveToPosition(position);
 
         int idIndex = mCursor.getColumnIndex(TaskEntry._ID);
@@ -85,7 +92,12 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
         // update widget
         RemoteViews view = new RemoteViews(mContext.getPackageName(), R.layout.item_widget_layout);
         view.setTextViewText(R.id.textview_widget_task, taskTitle);
-        view.setTextViewText(R.id.textview_widget_date, mCursor.getString(dateIndex));
+
+        if (!Utils.isEmptyString(mCursor.getString(dateIndex))) {
+            view.setTextViewText(R.id.textview_widget_date, Utils.getDisplayDate(mCursor.getString(dateIndex)));
+        } else {
+            view.setTextViewText(R.id.textview_widget_date, "");
+        }
 
         // onClick PendingIntent Template using the specific task Id for each item individually
         Bundle extras = new Bundle();
@@ -116,5 +128,4 @@ public class WidgetDataProvider implements RemoteViewsService.RemoteViewsFactory
     public boolean hasStableIds() {
         return false;
     }
-
 }

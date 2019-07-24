@@ -6,6 +6,7 @@
     <string name="title_taskedit">Edit Task</string>
     <string name="title_pending_tasks">Pending Tasks</string>
 
+    <string name="list_time_disp">\u0040 %s</string>
     <string name="label_display_list">Show List</string>
     <string name="label_optional">OPTIONAL</string>
     <string name="label_due_on">Due On</string>
@@ -14,6 +15,8 @@
     <string name="label_check_location">Check Location</string>
     <string name="label_call">Make a Call</string>
     <string name="label_email">Send Email</string>
+    <string name="label_alarm_title">Wakey Wakey!</string>
+    <string name="label_alarm_message">It\'s time to review your list of tasks</string>
 
     <string name="default_panel_heading">Tasks Today</string>
     <string name="default_panel_count">10</string>
@@ -43,6 +46,7 @@
     <string name="dialog_delete">Are you sure you want to delete this task?</string>
     <string name="action_yes">YES</string>
     <string name="action_no">NO</string>
+    <string name="action_stop">STOP ALARM</string>
 
     <string name="info_db_upgrade">Upgrading database from Version %d to Version %d</string>
     <string name="info_no_tasks">No active tasks found.\n\nGet started by adding a new task and \nalso check if all task filters are cleared.</string>
@@ -50,7 +54,7 @@
     <string name="info_save_success">Task saved successfully</string>
     <string name="info_delete_success">Task deleted</string>
     <string name="info_delete_repeat_success">Task deleted</string>
-    <string name="info_location_policy">Google policy limits storing location details for not more than 30 days.\nThis task will be auto-deleted in 30 days from today.</string>
+    <string name="info_location_policy">Google policy limits storing location details for not more than 30 days.This task will be auto-deleted in 30 days from today.</string>
     <string name="info_completed_tasks_delete">%d completed tasks deleted</string>
     <string name="info_completed_no_delete">No completed tasks found that are older than a day. %d completed tasks deleted</string>
     <string name="info_location_tasks_deleted">%d tasks containing Location information were deleted</string>
@@ -75,39 +79,86 @@
     <string name="errormsg_missing_category">Please select a task category</string>
     <string name="errormsg_missing_frequency">Please select a repeat frequency for a repeating task</string>
     <string name="errormsg_missing_due_date">Repeat task must have a Due Date. \nPlease select the first one.</string>
+    <string name="errormsg_old_due_date">Due Date cannot be in the past. Date can be set to today or one in future.</string>
     <string name="errormsg_missing_extra">You chose to add some extra data but it\'s missing. \nFor no extra details, change selection to default.</string>
 
-
-    <string name="error_camera_thread_paused">Frame processing thread interrupted on release.</string>
-    <string name="warning_camera_zoom">Zoom is not supported on this device</string>
+    <!-- Strings for Barcode and Camera features -->
     <string name="info_camera_focusmode">Camera focus mode is not supported on this device.</string>
-    <string name="warning_camera_no_preview">No preview sizes have a corresponding same-aspect-ratio picture size</string>
     <string name="info_camera_skipping_frame">Skipping frame. Could not find ByteBuffer associated with the image data from the camera.</string>
     <string name="info_camera_flashmode">Camera flash mode is not supported on this device.</string>
-    <string name="error_camera_rotation">Bad rotation value</string>
-    <string name="error_camera_context">No context supplied.</string>
-    <string name="error_camera_detector">No detector supplied</string>
-    <string name="error_camera_fps">Invalid fps: %f</string>
-    <string name="error_camera_invalid_dimen">Invalid preview size: %d x %d</string>
+    <string name="info_camera_unexpected_permission">Got unexpected camera permission result</string>
+    <string name="no_camera_permission">This feature cannot be used due to missing camera permission. Request permission now?</string>
+    <string name="info_camera_portrait_default">isPortraitMode returning false by default</string>
+
+    <string name="error_camera_thread_paused">Frame processing thread for camera interrupted on release.</string>
+    <string name="error_camera_rotation">Bad rotation value for camera</string>
+    <string name="error_camera_context">No context supplied for camera.</string>
+    <string name="error_camera_detector">No detector supplied for camera</string>
+    <string name="error_camera_fps">Invalid camera Frame Per Second: %f</string>
+    <string name="error_camera_invalid_dimen">Invalid camera preview size: %d x %d</string>
     <string name="error_camera_invalid_facing">Invalid camera facing: %d</string>
     <string name="error_camera_not_found">Could not find requested camera.</string>
-    <string name="error_camera_no_preview">Could not find suitable preview size.</string>
-    <string name="error_camera_no_fps">Could not find suitable preview frames per second range.</string>
+    <string name="error_camera_no_preview">Could not find suitable camera preview size.</string>
+    <string name="error_camera_no_fps">Could not find suitable preview frames per second range for camera.</string>
     <string name="error_camera_failed_buffer">Failed to create valid buffer for camera source.</string>
     <string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
     <string name="error_camera_no_permission">Do not have permission to start the camera</string>
     <string name="error_camera_failed_start">Could not start camera source.</string>
-    <string name="info_camera_portrait_default">isPortraitMode returning false by default</string>
-    <string name="warning_error_getting_permission">Camera permission is not granted. Requesting permission</string>
+    <string name="warning_error_getting_permission">Requesting camera permission as it is not granted</string>
     <string name="warning_camera_detector_dependencies">Detector dependencies are not yet available.</string>
-    <string name="no_camera_permission">This application cannot run because it does not have the camera permission.  The application will now exit.</string>
-    <string name="info_camera_unexpected_permission">Got unexpected permission result</string>
-    <string name="info_camera_permission_granted">Camera permission granted - initialize the camera source</string>
     <string name="title_request_permission">Permission needed</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
     <string name="barcode_failure">No barcode captured</string>
 
+    <string name="warning_camera_zoom">Zoom is not supported on this device</string>
+    <string name="warning_camera_no_preview">No preview sizes have a corresponding same-aspect-ratio picture size</string>
+
+    <!-- Strings for Settings -->
     <string name="settings_menu">Settings</string>
-    <string name="pref_pref4" translatable="false">pref_pref4</string>
-    <string name="pref_pref3" translatable="false">pref_pref3</string>
+    <string name="settings_group_order">ORDERING PREFERENCES</string>
+    <string name="settings_group_alarm">ALARM PREFERENCES</string>
+    <string name="settings_switch_key" translatable="false">pref_switch</string>
+    <string name="settings_alarm_key" translatable="false">pref_alarm</string>
+
+    <string name="notification_channel_name" translatable="false">Channel</string>
+    <string name="notifiation_channel_desc" translatable="false">Notification Channel Description</string>
+    <string name="settings_order_by_label">Order By</string>
+    <string name="settings_order_by_key" translatable="false">order-by</string>
+    <string name="settings_order_by_default" translatable="false">@string/settings_order_by_duedate_value</string>
+
+    <!-- Default Order - Order by Due Date ASC-->
+    <string name="settings_order_by_duedate_label">Due Date (default)</string>
+    <string name="settings_order_by_duedate_value" translatable="false">due_date</string>
+
+    <!-- Order by Entry DESC -->
+    <string name="settings_order_by_newest_label">Newest First</string>
+    <string name="settings_order_by_newest_value" translatable="false">newest</string>
+
+    <!-- Order by Priority DESC -->
+    <string name="settings_order_by_priority_label">Highest Priority First</string>
+    <string name="settings_order_by_priority_value" translatable="false">priority</string>
+
+    <string-array name="settings_order_by_labels">
+        <item>@string/settings_order_by_duedate_label</item>
+        <item>@string/settings_order_by_newest_label</item>
+        <item>@string/settings_order_by_priority_label</item>
+    </string-array>
+
+    <string-array name="settings_order_by_values">
+        <item>@string/settings_order_by_duedate_value</item>
+        <item>@string/settings_order_by_newest_value</item>
+        <item>@string/settings_order_by_priority_value</item>
+    </string-array>
+
+    <string name="msg_alarm_set">Daily alarm set for %s</string>
+    <string name="msg_notification_off">Turn on daily alarm notification before setting alarm</string>
+    <string name="msg_alarm_cancelled">Daily alarm notification cancelled</string>
+    <string name="error_timepicker_edit_not_found">Dialog view must contain a TimePicker with id \'edit\'</string>
+    <string name="settings_switch_label">Turn on/off Notification</string>
+    <string name="settings_alarm_label">Set alarm time</string>
+    <string name="settings_alarm_off">Notification Off</string>
+    <string name="settings_alarm_on">Notification On</string>
+    <string name="settings_alarm_time">00:00</string>
+    <string name="msg_alarm_stopped">Alarm stopped</string>
+
 </resources>
