@@ -34,3 +34,35 @@ I created a simple **ToDo List App** as part of this project will allow keeping 
 <a href="https://user-images.githubusercontent.com/22053146/61820811-ba21c180-ae4d-11e9-8828-cdaa57b2edf2.jpg"><img src="https://user-images.githubusercontent.com/22053146/61820811-ba21c180-ae4d-11e9-8828-cdaa57b2edf2.jpg" width="380" height="696" /></a>
 <a href="https://user-images.githubusercontent.com/22053146/61820886-d7ef2680-ae4d-11e9-9114-a0858c594deb.jpg"><img src="https://user-images.githubusercontent.com/22053146/61820886-d7ef2680-ae4d-11e9-9114-a0858c594deb.jpg" width="380" height="696" /></a>
 <a href="https://user-images.githubusercontent.com/22053146/61820910-ec332380-ae4d-11e9-80dd-42e1a29f6cdc.jpg"><img src="https://user-images.githubusercontent.com/22053146/61820910-ec332380-ae4d-11e9-80dd-42e1a29f6cdc.jpg" width="380" height="696" /></a>
+
+
+```
+PROJECT LICENSE
+
+*Copyright (c) 2019 Aditi Bhattacharya. All rights reserved.*
+
+This project was submitted by Aditi Bhattacharya (project owner and author) as part of the **Android Developer Nanodegree** course at ![Udactiy](https://eu.udacity.com/). As part of Udacity's ![Honor Code and Community Code of Conduct](https://eu.udacity.com/legal/community-guidelines), all submissions must be the student's own work to avoid plagiarism. Hence reproduction/submission of part or all of this project for Udacity or a similar training institution, or using/distributing this project for commercial reasons is prohibited  under all circumstances.
+
+
+MIT License
+
+Copyright (c) <year> <copyright holders>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
