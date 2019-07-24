@@ -42,10 +42,11 @@ PROJECT LICENSE
 Copyright (c) 2019 Aditi Bhattacharya. All rights reserved.
 
 This project was submitted by Aditi Bhattacharya (project owner and author) as part 
-of the Android Developer Nanodegree course at Udacity. 
-As per Udacity's Honor Code and Community Code of Conduct, 
-all submissions must be the student's own work to avoid plagiarism. Hence 
-reproduction/submission of part or all of this project for Udacity or a similar 
+of the Android Developer Nanodegree course at Udacity. As per Udacity's "Honor Code and 
+Community Code of Conduct", all submissions must be the student's own work to 
+avoid plagiarism. 
+
+Hence, reproduction/submission of part or all of this project for Udacity or a similar 
 training institution, or using/distributing this project for commercial reasons 
 is prohibited  under all circumstances.
 
@@ -73,6 +74,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-Links:
-![Udacity](https://eu.udacity.com/)
+Links:<br/>
+![Udacity](https://eu.udacity.com/)<br/>
 ![Udacity's Honor Code and Community Code of Conduct](https://eu.udacity.com/legal/community-guidelines)
