@@ -39,11 +39,11 @@ I created a simple **ToDo List App** as part of this project will allow keeping 
 ```
 PROJECT LICENSE
 
-*Copyright (c) 2019 Aditi Bhattacharya. All rights reserved.*
+Copyright (c) 2019 Aditi Bhattacharya. All rights reserved.
 
 This project was submitted by Aditi Bhattacharya (project owner and author) as part 
-of the Android Developer Nanodegree course at ![Udacity](https://eu.udacity.com/). 
-As per Udacity's ![Honor Code and Community Code of Conduct](https://eu.udacity.com/legal/community-guidelines), 
+of the Android Developer Nanodegree course at Udacity. 
+As per Udacity's Honor Code and Community Code of Conduct, 
 all submissions must be the student's own work to avoid plagiarism. Hence 
 reproduction/submission of part or all of this project for Udacity or a similar 
 training institution, or using/distributing this project for commercial reasons 
@@ -72,3 +72,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+Links:
+![Udacity](https://eu.udacity.com/)
+![Udacity's Honor Code and Community Code of Conduct](https://eu.udacity.com/legal/community-guidelines)
