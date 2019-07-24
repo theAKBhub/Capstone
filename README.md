@@ -40,7 +40,7 @@ I created a simple **ToDo List App** as part of this project will allow keeping 
 ![Barcode Reader – official google samples](https://github.com/googlesamples/android-vision/tree/master/visionSamples/barcode-reader)<br/>
 ![Custom Preferences Screen](https://medium.com/@JakobUlbrich/building-a-settings-screen-for-android-part-3-ae9793fd31ec)
 
-
+<br/><br/><br/>
 
 ```
 PROJECT LICENSE
