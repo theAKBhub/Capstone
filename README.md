@@ -12,6 +12,7 @@ The project goal was to create an app using Android features learnt throughout t
 
 I created a simple **ToDo List App** as part of this project will allow keeping track of and managing everyday tasks, along with storing some additional information with each task (e.g. user will be able to pick a place from the Google Map if the task is destination related, scan a product barcode if the user likes an item but wants to buy it in the future, store an email, or store a phone number). 
 
+
 #### Project Highlights
 * Displays a list of tasks that can be sorted and filtered
 * Allows user to add, edit, and delete tasks, as well as mark them as completed
